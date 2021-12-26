@@ -19,35 +19,22 @@ public class SceneController {
     private Parent root;
     
     public void switchToOnlineScene(ActionEvent event) throws IOException{
-        root = FXMLLoader.load(getClass().getResource("/view/OnlineSceneView.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        switchToScene(event , "/view/OnlineSceneView.fxml");
     }
     
     public void switchToPlayerVsPlayerScene(ActionEvent event) throws IOException{
-        root = FXMLLoader.load(getClass().getResource("/view/PlayerVsPlayerView.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        switchToScene(event , "/view/PlayerVsPlayerView.fxml");
     }
     
     public void switchToMainScene(ActionEvent event) throws IOException{
-        root = FXMLLoader.load(getClass().getResource("/view/MainScene.fxml"));
+        switchToScene(event , "/view/MainScene.fxml");
+    }
+    
+    private void switchToScene(ActionEvent event , String filePath) throws IOException{
+        root = FXMLLoader.load(getClass().getResource(filePath));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
-    
-    private void switchToScene(ActionEvent event) throws IOException{
-        
-        
-    }
-    
-    
-    
-    
 }
