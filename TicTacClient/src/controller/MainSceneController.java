@@ -18,7 +18,12 @@ public class MainSceneController implements Initializable {
     
     @FXML
     private void handleVsAiBtn(ActionEvent event){
-        
+        controller = new SceneController();
+        try {
+            controller.switchToPlayerVsAIScene(event);
+        } catch (IOException ex) {
+            Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @FXML
