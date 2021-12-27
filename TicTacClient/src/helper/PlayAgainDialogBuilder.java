@@ -8,7 +8,7 @@ import javafx.scene.control.ButtonType;
  *
  * @author Eslam Esmael
  */
-public class CustomDialog {
+public class PlayAgainDialogBuilder {
 
     public static boolean askPlayAgain(String s) {
         ButtonType Yes = new ButtonType("Play Again");

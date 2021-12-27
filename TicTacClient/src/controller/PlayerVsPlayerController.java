@@ -1,6 +1,6 @@
 package controller;
 
-import helper.CustomDialog;
+import helper.PlayAgainDialogBuilder;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,7 +18,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import model.GameSession;
@@ -71,14 +70,11 @@ public class PlayerVsPlayerController implements Initializable {
     private Button btn22;
 
     @FXML
-    private GridPane buttonsGrid;
+    private BorderPane borderPane;
 
     @FXML
-    private BorderPane borderPane;
-    
-    @FXML
     private Label scorePlayerOne;
-    
+
     @FXML
     private Label scorePlayerTwo;
 
@@ -288,7 +284,7 @@ public class PlayerVsPlayerController implements Initializable {
         }
     }
 
-     private void checkState() throws BackingStoreException {
+    private void checkState() throws BackingStoreException {
         checkRows();
         checkColumns();
         checkDiagonal();
@@ -319,16 +315,15 @@ public class PlayerVsPlayerController implements Initializable {
 
     public void replayAgain(String winner) throws BackingStoreException {
 
-        boolean result = CustomDialog.askPlayAgain(winner);
+        boolean result = PlayAgainDialogBuilder.askPlayAgain(winner);
         if (result) {
-
+            clearAllVariales();
             //get scene
             Parent buttonParent;
             try {
                 buttonParent = FXMLLoader.load(getClass().getResource("/view/PlayerVsPlayerView.fxml"));
                 //generate new scene
                 Scene buttonScene = new Scene(buttonParent);
-
                 //get stage information
                 Stage window = (Stage) btn00.getScene().getWindow();
                 window.setTitle("Home");
@@ -339,9 +334,36 @@ public class PlayerVsPlayerController implements Initializable {
             }
         } else {
             pref.clear();
+            clearAllVariales();
             //TODO navigate to main to main menu ya 5elan portsaid
         }
 
+    }
+
+    public void clearAllVariales() {
+        gameSession.setCounter(0);
+        for (int i = 0; i < 9; i++) {
+            gameSession.getPlayersMoves()[i] = null;
+        }
+        winner = false;
+        clearAllButtons();
+        display = false;
+        firstPlayerWinner = false;
+        secondPlayerWinner = false;
+        gameSession = null;
+        gameSession = new GameSession();
+    }
+
+    public void clearAllButtons() {
+        btn00.setText("");
+        btn01.setText("");
+        btn02.setText("");
+        btn10.setText("");
+        btn11.setText("");
+        btn12.setText("");
+        btn20.setText("");
+        btn21.setText("");
+        btn22.setText("");
     }
 
     @Override
@@ -363,7 +385,7 @@ public class PlayerVsPlayerController implements Initializable {
             firstPlayerScore = pref.getInt("firstPlayerScore", 0);
             secondPlayerScore = pref.getInt("secondPlayerScore", 0);
             if (firstPlayerScore > 0 || secondPlayerScore > 0) {
-                scorePlayerOne.setText( String.valueOf(firstPlayerScore));
+                scorePlayerOne.setText(String.valueOf(firstPlayerScore));
                 scorePlayerTwo.setText(String.valueOf(secondPlayerScore));
             }
 

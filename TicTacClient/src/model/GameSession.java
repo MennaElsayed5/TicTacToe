@@ -30,6 +30,12 @@ public class GameSession {
     public void setPlayersMoves(PlayerMove[] playersMoves) {
         this.playersMoves = playersMoves;
     }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+    
+    
     
     
     

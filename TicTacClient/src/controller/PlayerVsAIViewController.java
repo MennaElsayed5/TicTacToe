@@ -1,6 +1,6 @@
 package controller;
 
-import helper.CustomDialog;
+import helper.PlayAgainDialogBuilder;
 import helper.WinnerAndLoser;
 import java.io.IOException;
 import java.net.URL;
@@ -34,7 +34,7 @@ public class PlayerVsAIViewController implements Initializable {
 
     GameSession gameSession = new GameSession();
     boolean isXSymbol = true;
-    String symbol="X";
+    String symbol = "X";
     PlayerMove[] playersMoves = new PlayerMove[9];
     int counter = 0;
 
@@ -104,17 +104,17 @@ public class PlayerVsAIViewController implements Initializable {
         ((Button) event.getSource()).setDisable(true);
         gameSession.addMove(returnMove((Button) event.getSource()));
         playersMoves[counter++] = returnMove((Button) event.getSource());
-        System.out.println("counter after "+counter);        
+        System.out.println("counter after " + counter);
         ((Button) event.getSource()).setText(symbol);
         try {
             checkState();
         } catch (BackingStoreException ex) {
             Logger.getLogger(PlayerVsPlayerController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        PlayerMove newAiMove =aiMove();
+        PlayerMove newAiMove = aiMove();
         gameSession.addMove(newAiMove);
-        setAIText(newAiMove.getX() , newAiMove.getY());
-        playersMoves[counter++]=newAiMove;
+        setAIText(newAiMove.getX(), newAiMove.getY());
+        playersMoves[counter++] = newAiMove;
         try {
             checkState();
         } catch (BackingStoreException ex) {
@@ -122,7 +122,7 @@ public class PlayerVsAIViewController implements Initializable {
         }
     }
 
-    public void setAIText(int x , int y) {
+    public void setAIText(int x, int y) {
         if (x == 0 && y == 0) {
             btn00.setText("O");
             btn00.setDisable(true);
@@ -242,30 +242,31 @@ public class PlayerVsAIViewController implements Initializable {
         Random r = new Random();
         int x = r.nextInt(3);
         int y = r.nextInt(3);
-        if(counter<9)
-        while(checkMoveFound(x,y))
-        {
-            x = r.nextInt(3);
-            y = r.nextInt(3);
+        if (counter < 9) {
+            while (checkMoveFound(x, y)) {
+                x = r.nextInt(3);
+                y = r.nextInt(3);
+            }
         }
-            return new PlayerMove(x, y, false);
+        return new PlayerMove(x, y, false);
     }
-    public void clearAllVariales()
-    {
-    counter=0;
-    for(int i=0;i<9;i++)
-        playersMoves[i]=null;
-         winner = false;
-         clearAllButtons();
-    display = false;
-     firstPlayerWinner = false;
-    secondPlayerWinner = false;
-    gameSession=null;
-    gameSession = new GameSession();
+
+    public void clearAllVariales() {
+        counter = 0;
+        for (int i = 0; i < 9; i++) {
+            playersMoves[i] = null;
+        }
+        winner = false;
+        clearAllButtons();
+        display = false;
+        firstPlayerWinner = false;
+        secondPlayerWinner = false;
+        gameSession = null;
+        gameSession = new GameSession();
     }
-   public void clearAllButtons()
-   {
-   btn00.setText("");
+
+    public void clearAllButtons() {
+        btn00.setText("");
         btn01.setText("");
         btn02.setText("");
         btn10.setText("");
@@ -274,8 +275,7 @@ public class PlayerVsAIViewController implements Initializable {
         btn20.setText("");
         btn21.setText("");
         btn22.setText("");
-   }
-
+    }
 
     private void drawLine(Button b1, Button b2) {
         Bounds bound1 = b1.localToScene(b1.getBoundsInLocal());
@@ -329,8 +329,9 @@ public class PlayerVsAIViewController implements Initializable {
             }
             winner = true;
         }
-        if(winner)
+        if (winner) {
             disableAllButtons(true);
+        }
     }
 
     private void checkColumns() {
@@ -373,8 +374,9 @@ public class PlayerVsAIViewController implements Initializable {
             }
             winner = true;
         }
-        if(winner)
+        if (winner) {
             disableAllButtons(true);
+        }
     }
 
     private void checkDiagonal() {
@@ -406,8 +408,9 @@ public class PlayerVsAIViewController implements Initializable {
             }
             winner = true;
         }
-        if(winner)
+        if (winner) {
             disableAllButtons(true);
+        }
     }
 
     private boolean isFullGrid() {
@@ -429,12 +432,12 @@ public class PlayerVsAIViewController implements Initializable {
     private void checkState() throws BackingStoreException {
         checkRows();
         checkColumns();
-        checkDiagonal();  
+        checkDiagonal();
         if (firstPlayerWinner) {
             System.out.println("X is win");
             scorePlayerOne.setText(String.valueOf(firstPlayerScore));
             pref.putInt("firstPlayerScore", firstPlayerScore);
-        new WinnerAndLoser(firstPlayerWinner).display();
+            new WinnerAndLoser(firstPlayerWinner).display();
             replayAgain("You Won!");
         } else if (secondPlayerWinner) {
             new WinnerAndLoser(firstPlayerWinner).display();
@@ -449,9 +452,10 @@ public class PlayerVsAIViewController implements Initializable {
             }
         }
     }
+
     public void replayAgain(String winner) throws BackingStoreException {
 
-        boolean result = CustomDialog.askPlayAgain(winner);
+        boolean result = PlayAgainDialogBuilder.askPlayAgain(winner);
         if (result) {
             clearAllVariales();
             //get scene
