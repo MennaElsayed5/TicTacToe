@@ -38,7 +38,7 @@ public class SplashScreen extends Thread{
        public void run()
        {
          try {
-                Thread.sleep(5000);
+                Thread.sleep(2500);
                 Platform.runLater(() -> {
                     stage.close();          
                 });
@@ -52,7 +52,7 @@ public class SplashScreen extends Thread{
     {   
         start();
          Image i;
-                 i = new Image(getClass().getResourceAsStream("/view/splashImg.png"));
+                 i = new Image(getClass().getResourceAsStream("/assets/splashImg.png"));
              //stage.initModality(Modality.APPLICATION_MODAL);
              //remove exit and maximize and minimize
              stage.initStyle(StageStyle.UNDECORATED);

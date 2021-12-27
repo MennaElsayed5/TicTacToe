@@ -26,8 +26,7 @@ public class OnlineSceneController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/GameBoardComponent.fxml"));
-        fxmlLoader.setController(new GameBoardComponentController()); //Or just specify the Controller in the FXML file
-
+        
         try {
           anchorPane.getChildren().add(fxmlLoader.load());
         } catch (IOException ex) {

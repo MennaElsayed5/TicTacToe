@@ -17,7 +17,6 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/GameBoardComponent.fxml"));
-            fxmlLoader.setController(new GameBoardComponentController()); //Or just specify the Controller in the FXML file
             anchorPane.getChildren().add(fxmlLoader.load());
         } catch (IOException ex) {
             ex.printStackTrace();
