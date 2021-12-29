@@ -44,66 +44,67 @@ public class GameBoardComponentController implements Initializable {
     boolean isXSymbol = true;
     String symbol;
 
-    private String player = "X";
-    private boolean winner = false;
-    private boolean display = false;
-    private boolean firstPlayerWinner = false;
-    private boolean secondPlayerWinner = false;
-    private int firstPlayerScore = 0;
-    private int secondPlayerScore = 0;
+    protected String player = "X";
+    protected boolean winner = false;
+    protected boolean display = false;
+    protected boolean firstPlayerWinner = false;
+    protected boolean secondPlayerWinner = false;
+    protected int firstPlayerScore = 0;
+    protected int secondPlayerScore = 0;
     Color xForeground = Color.BLUE;
     Color oForeground = Color.RED;
     boolean isGameEnds;
 
     @FXML
-    private Pane pane;
+    protected Pane pane;
 
     @FXML
-    private Button btn00;
+    protected Button btn00;
 
     @FXML
-    private Button btn01;
+    protected Button btn01;
 
     @FXML
-    private Button btn02;
+    protected Button btn02;
 
     @FXML
-    private Button btn10;
+    protected Button btn10;
 
     @FXML
-    private Button btn11;
+    protected Button btn11;
 
     @FXML
-    private Button btn12;
+    protected Button btn12;
 
     @FXML
-    private Button btn20;
+    protected Button btn20;
 
     @FXML
-    private Button btn21;
+    protected Button btn21;
 
     @FXML
-    private Button btn22;
+    protected Button btn22;
 
     @FXML
-    private GridPane buttonsGrid;
+    protected GridPane buttonsGrid;
     @FXML
-    private Button buttonExit;
+    protected Button buttonExit;
     @FXML
-    private Label labelScorePlayer1;
+    protected Label labelScorePlayer1;
     @FXML
-    private Label labelScorePlayer2;
+    protected Label labelScorePlayer2;
 
+    
     @FXML
-    private void buttonOnePressed(ActionEvent event) {
+    protected void buttonOnePressed(ActionEvent event) {
         ((Button) event.getSource()).setDisable(true);
         gameSession.addMove(returnMove((Button) event.getSource()));
         ((Button) event.getSource()).setText(returnSymbol());
         checkState();
-
+      
     }
 
-    private PlayerMove returnMove(Button btn) {
+    protected PlayerMove returnMove(Button btn) {
         PlayerMove move = new PlayerMove();
         if (btn == btn00) {
             move = new PlayerMove(0, 0, isXSymbol);
@@ -130,7 +131,7 @@ public class GameBoardComponentController implements Initializable {
         return move;
     }
 
-    private String returnSymbol() {
+    protected String returnSymbol() {
         //  String symbol;
         if (isXSymbol == true) {
             symbol = "X";
@@ -142,7 +143,7 @@ public class GameBoardComponentController implements Initializable {
         return symbol;
     }
 
-    private void drawLine(Button b1, Button b2) {
+    protected void drawLine(Button b1, Button b2) {
         Bounds bound1 = b1.localToScene(b1.getBoundsInLocal());
         Bounds bound2 = b2.localToScene(b2.getBoundsInLocal());
         double x1, y1, x2, y2;
@@ -155,7 +156,7 @@ public class GameBoardComponentController implements Initializable {
 
     }
 
-    private void checkRows() {
+    protected void checkRows() {
         if (btn00.getText().equals(btn01.getText()) && btn01.getText().equals(btn02.getText()) && !btn00.getText().equals("")) {
             drawLine(btn00, btn02);
             colorBackgroundWinnerButtons(btn00, btn01, btn02);
@@ -206,7 +207,7 @@ public class GameBoardComponentController implements Initializable {
 
     }
 
-    private void checkColumns() {
+    protected void checkColumns() {
         if (btn00.getText().equals(btn10.getText())
                 && btn10.getText().equals(btn20.getText())
                 && !btn00.getText().equals("")) {
@@ -258,7 +259,7 @@ public class GameBoardComponentController implements Initializable {
 
     }
 
-    private void checkDiagonal() {
+    protected void checkDiagonal() {
         if (btn00.getText().equals(btn11.getText())
                 && btn11.getText().equals(btn22.getText())
                 && !btn00.getText().equals("")) {
@@ -296,7 +297,7 @@ public class GameBoardComponentController implements Initializable {
 
     }
 
-    private boolean isFullGrid() {
+    protected boolean isFullGrid() {
         if (!btn00.getText().equals("")
                 && !btn01.getText().equals("")
                 && !btn02.getText().equals("")
@@ -312,7 +313,7 @@ public class GameBoardComponentController implements Initializable {
         }
     }
 
-    private void checkState() {
+    protected void checkState() {
         checkRows();
         checkColumns();
         checkDiagonal();
