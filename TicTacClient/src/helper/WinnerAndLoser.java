@@ -30,7 +30,7 @@ public class WinnerAndLoser extends Thread {
     @Override
     public void run() {
         try {
-            Thread.sleep(2500);
+            Thread.sleep(5000);
             Platform.runLater(() -> {
                 stage.close();
             });

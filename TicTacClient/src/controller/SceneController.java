@@ -32,9 +32,6 @@ public class SceneController {
     public void switchToMainScene(ActionEvent event) throws IOException{
         switchToScene(event,"/view/MainScene.fxml");
     }
-     public void switchToOnlineMainScene(ActionEvent event) throws IOException{
-        switchToScene(event,"/view/OnlineMainScene.fxml");
-    }
     
     private void switchToScene(ActionEvent event,String path) throws IOException{
         root = FXMLLoader.load(getClass().getResource(path));
