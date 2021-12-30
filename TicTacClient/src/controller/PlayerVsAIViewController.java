@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller;
 
 import helper.PlayAgainDialogBuilder;
@@ -10,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import model.GameSession;
@@ -28,10 +35,10 @@ import model.PlayerMove;
 
 /**
  *
- * @author Eslam Esmael
+ * @author mina
  */
-public class PlayerVsAIViewController implements Initializable {
-
+public class PlayerVsAIViewController implements Initializable{
+    
     GameSession gameSession = new GameSession();
     boolean isXSymbol = true;
     String symbol = "X";
@@ -78,13 +85,13 @@ public class PlayerVsAIViewController implements Initializable {
     private GridPane buttonsGrid;
 
     @FXML
-    private BorderPane borderPane;
+    private Pane pane;
 
     @FXML
     private Label scorePlayerOne;
 
     @FXML
-    private Label scorePlayerTwo;
+    private Label computerScore;
 
     @FXML
     private Button restartButton;
@@ -92,34 +99,45 @@ public class PlayerVsAIViewController implements Initializable {
     @FXML
     private void buttonBackPressed(ActionEvent event) {
         SceneController controller = new SceneController();
+       
         try {
             controller.switchToMainScene(event);
         } catch (IOException ex) {
-            Logger.getLogger(PlayerVsPlayerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerVsAIViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
     }
 
     @FXML
     private void buttonOnePressed(ActionEvent event) {
         ((Button) event.getSource()).setDisable(true);
+        // disableAllButtons(true);
         gameSession.addMove(returnMove((Button) event.getSource()));
         playersMoves[counter++] = returnMove((Button) event.getSource());
         System.out.println("counter after " + counter);
         ((Button) event.getSource()).setText(symbol);
+        
         try {
+           
             checkState();
         } catch (BackingStoreException ex) {
-            Logger.getLogger(PlayerVsPlayerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerVsAIViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         PlayerMove newAiMove = aiMove();
-        gameSession.addMove(newAiMove);
+                      gameSession.addMove(newAiMove);
         setAIText(newAiMove.getX(), newAiMove.getY());
-        playersMoves[counter++] = newAiMove;
+        playersMoves[counter++] = newAiMove; 
+        
+        
+         
         try {
+            
             checkState();
         } catch (BackingStoreException ex) {
-            Logger.getLogger(PlayerVsPlayerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerVsAIViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
     }
 
     public void setAIText(int x, int y) {
@@ -183,37 +201,38 @@ public class PlayerVsAIViewController implements Initializable {
         btn22.setDisable(b);
     }
 
-    /*
+    
     public void enableEmptyButtons(boolean b) {
-        if (btn00.getText().equals("")) {
-            btn00.setDisable(b);
+        System.out.println("mina enable");
+        if (btn00.getText().equals("")) { 
+            btn00.setDisable(!b);
         }
         if (btn00.getText().equals("")) {
-            btn01.setDisable(b);
+            btn01.setDisable(!b);
         }
         if (btn00.getText().equals("")) {
-            btn02.setDisable(b);
+            btn02.setDisable(!b);
         }
         if (btn00.getText().equals("")) {
-            btn10.setDisable(b);
+            btn10.setDisable(!b);
         }
         if (btn00.getText().equals("")) {
-            btn11.setDisable(b);
+            btn11.setDisable(!b);
         }
         if (btn00.getText().equals("")) {
-            btn12.setDisable(b);
+            btn12.setDisable(!b);
         }
         if (btn00.getText().equals("")) {
-            btn20.setDisable(b);
+            btn20.setDisable(!b);
         }
         if (btn00.getText().equals("")) {
-            btn21.setDisable(b);
+            btn21.setDisable(!b);
         }
         if (btn00.getText().equals("")) {
-            btn22.setDisable(b);
+            btn22.setDisable(!b);
         }
     }
-     */
+     
     private PlayerMove returnMove(Button btn) {
         PlayerMove move = new PlayerMove();
         if (btn == btn00) {
@@ -286,7 +305,7 @@ public class PlayerVsAIViewController implements Initializable {
         x2 = (bound2.getMinX() + bound2.getMaxX()) / 2;
         y2 = (bound2.getMinY() + bound2.getMaxY()) / 2;
         Line line = new Line(x1, y1, x2, y2);
-        borderPane.getChildren().add(line);
+        pane.getChildren().add(line);
     }
 
     private void checkRows() {
@@ -294,6 +313,7 @@ public class PlayerVsAIViewController implements Initializable {
                 && btn01.getText().equals(btn02.getText())
                 && !btn00.getText().equals("")) {
             drawLine(btn00, btn02);
+            colorBackgroundWinnerButtons(btn00, btn01, btn02);
             if (btn00.getText().equals("X")) {
                 firstPlayerWinner = true;
                 firstPlayerScore += 10;
@@ -306,6 +326,7 @@ public class PlayerVsAIViewController implements Initializable {
                 && btn11.getText().equals(btn12.getText())
                 && !btn10.getText().equals("")) {
             drawLine(btn10, btn12);
+            colorBackgroundWinnerButtons(btn10, btn11, btn12);
             if (btn10.getText().equals("X")) {
                 firstPlayerWinner = true;
                 firstPlayerScore += 10;
@@ -318,6 +339,7 @@ public class PlayerVsAIViewController implements Initializable {
                 && btn21.getText().equals(btn22.getText())
                 && !btn22.getText().equals("")) {
             drawLine(btn20, btn22);
+            colorBackgroundWinnerButtons(btn20, btn21, btn22);
             if (btn22.getText().equals("X")) {
                 System.out.println("x is winning");
                 firstPlayerWinner = true;
@@ -339,6 +361,7 @@ public class PlayerVsAIViewController implements Initializable {
                 && btn10.getText().equals(btn20.getText())
                 && !btn00.getText().equals("")) {
             drawLine(btn00, btn20);
+            colorBackgroundWinnerButtons(btn00, btn10, btn20);
             if (btn00.getText().equals("X")) {
                 System.out.println("x is winning");
                 firstPlayerWinner = true;
@@ -353,6 +376,7 @@ public class PlayerVsAIViewController implements Initializable {
                 && btn11.getText().equals(btn21.getText())
                 && !btn01.getText().equals("")) {
             drawLine(btn01, btn21);
+            colorBackgroundWinnerButtons(btn01, btn11, btn21);
             if (btn01.getText().equals("X")) {
                 firstPlayerWinner = true;
                 firstPlayerScore += 10;
@@ -365,6 +389,7 @@ public class PlayerVsAIViewController implements Initializable {
                 && btn12.getText().equals(btn22.getText())
                 && !btn02.getText().equals("")) {
             drawLine(btn02, btn22);
+            colorBackgroundWinnerButtons(btn02, btn12, btn22);
             if (btn02.getText().equals("X")) {
                 firstPlayerWinner = true;
                 firstPlayerScore += 10;
@@ -384,6 +409,7 @@ public class PlayerVsAIViewController implements Initializable {
                 && btn11.getText().equals(btn22.getText())
                 && !btn00.getText().equals("")) {
             drawLine(btn00, btn22);
+            colorBackgroundWinnerButtons(btn00, btn11, btn22);
             if (btn00.getText().equals("X")) {
                 firstPlayerWinner = true;
                 firstPlayerScore += 10;
@@ -397,6 +423,7 @@ public class PlayerVsAIViewController implements Initializable {
                 && btn11.getText().equals(btn20.getText())
                 && !btn02.getText().equals("")) {
             drawLine(btn02, btn20);
+            colorBackgroundWinnerButtons(btn02, btn11, btn20);
             if (btn02.getText().equals("X")) {
                 System.out.println("x is winning");
                 firstPlayerWinner = true;
@@ -442,7 +469,7 @@ public class PlayerVsAIViewController implements Initializable {
         } else if (secondPlayerWinner) {
             new WinnerAndLoser(firstPlayerWinner).display();
             System.out.println("O is win");
-            scorePlayerTwo.setText(String.valueOf(secondPlayerScore));
+            computerScore.setText(String.valueOf(secondPlayerScore));
             pref.putInt("secondPlayerScore", secondPlayerScore);
             replayAgain("You Lose!");
         } else {
@@ -458,6 +485,7 @@ public class PlayerVsAIViewController implements Initializable {
         boolean result = PlayAgainDialogBuilder.askPlayAgain(winner);
         if (result) {
             clearAllVariales();
+           
             //get scene
             Parent buttonParent;
             try {
@@ -473,8 +501,10 @@ public class PlayerVsAIViewController implements Initializable {
                 ex.printStackTrace();
             }
         } else {
+            disableAllButtons(true);
             pref.clear();
             clearAllVariales();
+            
             //TODO navigate to main to main menu ya 5elan portsaid
         }
 
@@ -499,10 +529,16 @@ public class PlayerVsAIViewController implements Initializable {
             secondPlayerScore = pref.getInt("Computer", 0);
             if (firstPlayerScore > 0 || secondPlayerScore > 0) {
                 scorePlayerOne.setText(String.valueOf(firstPlayerScore));
-                scorePlayerTwo.setText(String.valueOf(secondPlayerScore));
+                computerScore.setText(String.valueOf(secondPlayerScore));
             }
 
         }
     }
+      public void colorBackgroundWinnerButtons(Button b1, Button b2, Button b3) {
+        b1.setStyle("-fx-background-color: yellow;");
+        b2.setStyle("-fx-background-color: yellow;");
+        b3.setStyle("-fx-background-color: yellow;");
+    }
 
+  
 }

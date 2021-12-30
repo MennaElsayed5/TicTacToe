@@ -1,6 +1,6 @@
 package model;
 
-import helper.SplashScreen;
+import controller.SplashScreenController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +15,8 @@ public class TicTacClient extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        new SplashScreen().display();
+// Todo uncomment the splash        
+// new SplashScreenController().display();
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainScene.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);

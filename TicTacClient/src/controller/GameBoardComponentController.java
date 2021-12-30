@@ -100,7 +100,6 @@ public class GameBoardComponentController implements Initializable {
         gameSession.addMove(returnMove((Button) event.getSource()));
         ((Button) event.getSource()).setText(returnSymbol());
         checkState();
-
     }
 
     private PlayerMove returnMove(Button btn) {

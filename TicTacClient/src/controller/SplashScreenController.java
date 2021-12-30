@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package helper;
+package controller;
 
 
 import java.util.logging.Level;
@@ -22,12 +22,12 @@ import javafx.stage.StageStyle;
  *
  * @author mina
  */
-public class SplashScreen extends Thread{
+public class SplashScreenController extends Thread{
     Stage stage;
     ImageView iv;
     VBox box;
     
-   public SplashScreen()
+   public SplashScreenController()
     {
      stage=new Stage();
      box=new VBox();
@@ -43,7 +43,7 @@ public class SplashScreen extends Thread{
                     stage.close();          
                 });
             } catch (InterruptedException ex) {
-                Logger.getLogger(SplashScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SplashScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
        }   
     

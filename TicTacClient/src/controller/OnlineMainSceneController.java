@@ -5,6 +5,7 @@
  */
 package controller;
 
+import controller.CustomItems.CustomItemAvailableListViewController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;

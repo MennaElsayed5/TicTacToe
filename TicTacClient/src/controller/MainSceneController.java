@@ -21,6 +21,7 @@ public class MainSceneController implements Initializable {
     @FXML
     private ImageView applicationImageView;
     
+    
     @FXML
     private void handleVsAiBtn(ActionEvent event){
         controller = new SceneController();
@@ -30,6 +31,7 @@ public class MainSceneController implements Initializable {
             Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+ 
     
     @FXML
     private void handleVsPlayerBtn(ActionEvent event){
@@ -45,7 +47,7 @@ public class MainSceneController implements Initializable {
     private void handleVsPlayerOnlineBtn(ActionEvent event){
         controller = new SceneController();
         try {
-            controller.switchToOnlineScene(event);
+            controller.switchToOnlineMainScene(event);
         } catch (IOException ex) {
             Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }

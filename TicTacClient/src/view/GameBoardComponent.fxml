@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" fx:controller="controller.GameBoardComponentController" prefHeight="750.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="pane" prefHeight="750.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameBoardComponentController">
    <children>
       <BorderPane layoutX="19.0" layoutY="151.0" prefHeight="466.0" prefWidth="565.0">
          <center>
@@ -130,7 +130,7 @@
             <Font name="Arial Rounded MT Bold" size="28.0" />
          </font>
       </Label>
-      <Button fx:id="buttonExit" layoutX="206.0" layoutY="646.0" mnemonicParsing="false" onAction="#buttonOnePressed" prefHeight="39.0" prefWidth="132.0" text="Exit">
+      <Button fx:id="buttonExit" layoutX="206.0" layoutY="646.0" mnemonicParsing="false" onAction="buttonBackPressed" prefHeight="39.0" prefWidth="132.0" text="Exit">
          <font>
             <Font name="Arial Rounded MT Bold" size="25.0" />
          </font>
