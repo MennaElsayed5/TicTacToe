@@ -19,8 +19,16 @@ public class SceneController {
     private Parent root;
     
     public void switchToOnlineScene(ActionEvent event) throws IOException{
-        switchToScene(event,"/view/OnlineSceneView.fxml");
+      switchToScene(event,"/view/FirstScreenAfterEnteringIP.fxml");
     }
+    public void switchToLoginScene(ActionEvent event) throws IOException{
+    //  switchToScene(event,"/view/FirstScreenAfterEnteringIP.fxml");
+    }
+       
+    public void switchToRegisterScene(ActionEvent event) throws IOException{
+    //  switchToScene(event,"/view/FirstScreenAfterEnteringIP.fxml");
+    }
+    
     
     public void switchToPlayerVsPlayerScene(ActionEvent event) throws IOException{
         switchToScene(event,"/view/PlayerVsPlayerView.fxml");
