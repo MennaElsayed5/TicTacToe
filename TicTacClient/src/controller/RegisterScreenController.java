@@ -9,6 +9,6 @@ package controller;
  *
  * @author menna
  */
-public class FirstScreenAfterEnteringIP {
+public class RegisterScreenController {
     
 }

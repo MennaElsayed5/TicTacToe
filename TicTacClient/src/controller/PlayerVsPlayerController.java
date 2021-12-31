@@ -1,6 +1,7 @@
 package controller;
 
 import helper.PlayAgainDialogBuilder;
+import helper.Record;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,7 +16,9 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Line;
@@ -28,7 +31,7 @@ import model.PlayerMove;
  * @author Eslam Esmael
  */
 public class PlayerVsPlayerController implements Initializable {
-
+    Record record= new Record();
     GameSession gameSession = new GameSession();
     boolean isXSymbol = true;
     String symbol;
@@ -80,6 +83,9 @@ public class PlayerVsPlayerController implements Initializable {
 
     @FXML
     private Button restartButton;
+    
+     @FXML
+    private Button btnrecord;
 
     @FXML
     private void buttonBackPressed(ActionEvent event) {
@@ -124,6 +130,16 @@ public class PlayerVsPlayerController implements Initializable {
             move = new PlayerMove(2, 1, isXSymbol);
         } else if (btn == btn22) {
             move = new PlayerMove(2, 2, isXSymbol);
+        }
+        else if (btn == btnrecord){
+             Alert dlg = new Alert(Alert.AlertType.CONFIRMATION);
+	dlg.setHeaderText("Record Game");
+	dlg.setContentText("Do you want record this game ?");
+	dlg.getButtonTypes().clear();
+	dlg.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+	dlg.showAndWait();
+        boolean yes = dlg.getResult() == ButtonType.YES;
+         record.createFileToRecord();
         }
         return move;
     }

@@ -13,42 +13,44 @@ import javafx.stage.Stage;
  * @author Eslam Esmael
  */
 public class SceneController {
-    
+
     private Stage stage;
     private Scene scene;
     private Parent root;
-    
-    public void switchToOnlineScene(ActionEvent event) throws IOException{
-      switchToScene(event,"/view/FirstScreenAfterEnteringIP.fxml");
+
+    public void switchToPlayerVsPlayerScene(ActionEvent event) throws IOException {
+        switchToScene(event, "/view/PlayerVsPlayerView.fxml");
     }
-    public void switchToLoginScene(ActionEvent event) throws IOException{
-    //  switchToScene(event,"/view/FirstScreenAfterEnteringIP.fxml");
+
+    public void switchToPlayerVsAIScene(ActionEvent event) throws IOException {
+        switchToScene(event, "/view/PlayerVsAIView.fxml");
     }
-       
-    public void switchToRegisterScene(ActionEvent event) throws IOException{
-    //  switchToScene(event,"/view/FirstScreenAfterEnteringIP.fxml");
+
+    public void switchToMainScene(ActionEvent event) throws IOException {
+        switchToScene(event, "/view/MainScene.fxml");
     }
-    
-    
-    public void switchToPlayerVsPlayerScene(ActionEvent event) throws IOException{
-        switchToScene(event,"/view/PlayerVsPlayerView.fxml");
+
+    public void switchToOnlineMainScene(ActionEvent event) throws IOException {
+        switchToScene(event, "/view/OnlineMainScene.fxml");
     }
-     public void switchToPlayerVsAIScene(ActionEvent event) throws IOException{
-        switchToScene(event,"/view/PlayerVsAIView.fxml");
+
+    public void switchToOnlineScene(ActionEvent event) throws IOException {
+        switchToScene(event, "/view/FirstScreenAfterEnteringIP.fxml");
     }
-    
-    public void switchToMainScene(ActionEvent event) throws IOException{
-        switchToScene(event,"/view/MainScene.fxml");
+
+    public void switchToLoginScene(ActionEvent event) throws IOException {
+        //  switchToScene(event,"/view/FirstScreenAfterEnteringIP.fxml");
     }
-     public void switchToOnlineMainScene(ActionEvent event) throws IOException{
-        switchToScene(event,"/view/OnlineMainScene.fxml");
+
+    public void switchToRegisterScene(ActionEvent event) throws IOException {
+        switchToScene(event, "/view/RegisterScreen.fxml");
     }
-    
-    private void switchToScene(ActionEvent event,String path) throws IOException{
+
+    private void switchToScene(ActionEvent event, String path) throws IOException {
         root = FXMLLoader.load(getClass().getResource(path));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);                
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    } 
     }
+}
