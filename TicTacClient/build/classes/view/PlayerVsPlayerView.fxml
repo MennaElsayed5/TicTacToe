@@ -98,7 +98,6 @@
             <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <buttons>
                 <Button fx:id="backButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonBackPressed" text="Back" />
-                  <Button fx:id="btnrecord" mnemonicParsing="false" onAction="#buttonOnePressed" text="record" />
               </buttons>
                <BorderPane.margin>
                   <Insets left="20.0" />
