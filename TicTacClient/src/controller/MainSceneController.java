@@ -11,7 +11,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -23,6 +27,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 /**
  *
@@ -49,7 +54,7 @@ public class MainSceneController implements Initializable {
     private void handleVsPlayerBtn(ActionEvent event) {
         String namePlayer11 = "";
         String namePlayer22 = "";
-       boolean flag = true;
+        boolean flag = true;
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Dialog");
         Label namePlayer1 = new Label("Name player 1: " + namePlayer11);
@@ -65,21 +70,29 @@ public class MainSceneController implements Initializable {
         ButtonType buttonTypeOk = new ButtonType("Okay", ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
         Optional<String> result = dialog.showAndWait();
- 
-        if (result.isPresent() &&text1.getText().matches("^[A-Za-z]\\w{3,25}$") || text2.getText().matches("^[A-Za-z]\\w{3,25}$")) {
-             controller = new SceneController();
-               try {
-                   controller.switchToPlayerVsPlayerScene(event);
-               } catch (IOException ex) {
-                   Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
-               }
-        }
-        else{
+
+        if (result.isPresent() && text1.getText().matches("^[A-Za-z]\\w{3,25}$") || text2.getText().matches("^[A-Za-z]\\w{3,25}$")) {
+
+            controller = new SceneController();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlayerVsPlayerView2.fxml"));
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(loader.load());
+                ((PlayerVsPlayerController2) loader.getController()).setNames(text1.getText(), text2.getText());
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error Dialog");
             alert.setContentText("Wrong name Try Again");
-            alert.showAndWait();}
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -132,6 +145,7 @@ public class MainSceneController implements Initializable {
         Matcher matcher = pattern.matcher(Ip);
         return matcher.matches();
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         controller = new SceneController();

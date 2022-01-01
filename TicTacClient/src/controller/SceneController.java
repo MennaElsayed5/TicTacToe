@@ -19,7 +19,7 @@ public class SceneController {
     private Parent root;
 
     public void switchToPlayerVsPlayerScene(ActionEvent event) throws IOException {
-        switchToScene(event, "/view/PlayerVsPlayerView.fxml");
+        switchToScene(event, "/view/PlayerVsPlayerView2.fxml");
     }
 
     public void switchToPlayerVsAIScene(ActionEvent event) throws IOException {

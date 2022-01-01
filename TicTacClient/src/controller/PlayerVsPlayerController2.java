@@ -29,7 +29,7 @@ import model.PlayerMove;
  *
  * @author Eslam Esmael
  */
-public class PlayerVsPlayerController implements Initializable {
+public class PlayerVsPlayerController2 implements Initializable {
 
     GameSession gameSession = new GameSession();
     boolean isXSymbol = true;
@@ -75,6 +75,12 @@ public class PlayerVsPlayerController implements Initializable {
     private BorderPane borderPane;
 
     @FXML
+    private Label namePlayerOne;
+
+    @FXML
+    private Label namePlayerTwo;
+
+    @FXML
     private Label scorePlayerOne;
 
     @FXML
@@ -82,14 +88,14 @@ public class PlayerVsPlayerController implements Initializable {
 
     @FXML
     private Button restartButton;
-    
+
     @FXML
     private void buttonBackPressed(ActionEvent event) {
         SceneController controller = new SceneController();
         try {
             controller.switchToMainScene(event);
         } catch (IOException ex) {
-            Logger.getLogger(PlayerVsPlayerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerVsPlayerController2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -101,7 +107,7 @@ public class PlayerVsPlayerController implements Initializable {
         try {
             checkState();
         } catch (BackingStoreException ex) {
-            Logger.getLogger(PlayerVsPlayerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerVsPlayerController2.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -337,7 +343,6 @@ public class PlayerVsPlayerController implements Initializable {
         } else {
             pref.clear();
             clearAllVariales();
-            //TODO navigate to main to main menu ya 5elan portsaid
         }
 
     }
@@ -374,13 +379,13 @@ public class PlayerVsPlayerController implements Initializable {
         try {
             initPrefPlayer();
         } catch (BackingStoreException ex) {
-            Logger.getLogger(PlayerVsPlayerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerVsPlayerController2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void initPrefPlayer() throws BackingStoreException {
 
-        pref = Preferences.userNodeForPackage(PlayerVsPlayerController.class);
+        pref = Preferences.userNodeForPackage(PlayerVsPlayerController2.class);
         if (pref.nodeExists("")) {
             String fristplayerName = pref.get("fristPlayer", "");
             String secondPlayerName = pref.get("secondPlayer", "");
@@ -392,6 +397,11 @@ public class PlayerVsPlayerController implements Initializable {
             }
 
         }
+    }
+
+    public void setNames(String name1, String name2) {
+        namePlayerOne.setText(name1);
+        namePlayerTwo.setText(name2);
     }
 
 }

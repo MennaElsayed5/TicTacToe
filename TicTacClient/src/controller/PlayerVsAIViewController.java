@@ -37,8 +37,8 @@ import model.PlayerMove;
  *
  * @author mina
  */
-public class PlayerVsAIViewController implements Initializable{
-    
+public class PlayerVsAIViewController implements Initializable {
+
     GameSession gameSession = new GameSession();
     boolean isXSymbol = true;
     String symbol = "X";
@@ -99,13 +99,13 @@ public class PlayerVsAIViewController implements Initializable{
     @FXML
     private void buttonBackPressed(ActionEvent event) {
         SceneController controller = new SceneController();
-       
+
         try {
             controller.switchToMainScene(event);
         } catch (IOException ex) {
             Logger.getLogger(PlayerVsAIViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
     }
 
     @FXML
@@ -116,28 +116,25 @@ public class PlayerVsAIViewController implements Initializable{
         playersMoves[counter++] = returnMove((Button) event.getSource());
         System.out.println("counter after " + counter);
         ((Button) event.getSource()).setText(symbol);
-        
+
         try {
-           
+
             checkState();
         } catch (BackingStoreException ex) {
             Logger.getLogger(PlayerVsAIViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         PlayerMove newAiMove = aiMove();
-                      gameSession.addMove(newAiMove);
+        gameSession.addMove(newAiMove);
         setAIText(newAiMove.getX(), newAiMove.getY());
-        playersMoves[counter++] = newAiMove; 
-        
-        
-         
+        playersMoves[counter++] = newAiMove;
+
         try {
-            
             checkState();
         } catch (BackingStoreException ex) {
             Logger.getLogger(PlayerVsAIViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
     }
 
     public void setAIText(int x, int y) {
@@ -201,10 +198,9 @@ public class PlayerVsAIViewController implements Initializable{
         btn22.setDisable(b);
     }
 
-    
     public void enableEmptyButtons(boolean b) {
         System.out.println("mina enable");
-        if (btn00.getText().equals("")) { 
+        if (btn00.getText().equals("")) {
             btn00.setDisable(!b);
         }
         if (btn00.getText().equals("")) {
@@ -232,7 +228,7 @@ public class PlayerVsAIViewController implements Initializable{
             btn22.setDisable(!b);
         }
     }
-     
+
     private PlayerMove returnMove(Button btn) {
         PlayerMove move = new PlayerMove();
         if (btn == btn00) {
@@ -485,7 +481,7 @@ public class PlayerVsAIViewController implements Initializable{
         boolean result = PlayAgainDialogBuilder.askPlayAgain(winner);
         if (result) {
             clearAllVariales();
-           
+
             //get scene
             Parent buttonParent;
             try {
@@ -504,7 +500,7 @@ public class PlayerVsAIViewController implements Initializable{
             disableAllButtons(true);
             pref.clear();
             clearAllVariales();
-            
+
             //TODO navigate to main to main menu ya 5elan portsaid
         }
 
@@ -515,13 +511,13 @@ public class PlayerVsAIViewController implements Initializable{
         try {
             initPrefPlayer();
         } catch (BackingStoreException ex) {
-            Logger.getLogger(PlayerVsPlayerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerVsAIViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void initPrefPlayer() throws BackingStoreException {
 
-        pref = Preferences.userNodeForPackage(PlayerVsPlayerController.class);
+        pref = Preferences.userNodeForPackage(PlayerVsAIViewController.class);
         if (pref.nodeExists("")) {
             String fristplayerName = pref.get("fristPlayer", "");
             String secondPlayerName = pref.get("Computer", "");
@@ -534,11 +530,11 @@ public class PlayerVsAIViewController implements Initializable{
 
         }
     }
-      public void colorBackgroundWinnerButtons(Button b1, Button b2, Button b3) {
+
+    public void colorBackgroundWinnerButtons(Button b1, Button b2, Button b3) {
         b1.setStyle("-fx-background-color: yellow;");
         b2.setStyle("-fx-background-color: yellow;");
         b3.setStyle("-fx-background-color: yellow;");
     }
 
-  
 }
