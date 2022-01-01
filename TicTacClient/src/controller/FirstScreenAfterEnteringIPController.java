@@ -20,7 +20,7 @@ import javafx.scene.control.Button;
  * @author menna
  */
 public class FirstScreenAfterEnteringIPController implements Initializable {
-     SceneController controller;
+     SceneNavigationController controller;
      @FXML
      private Button btnLogin;
      
@@ -32,7 +32,7 @@ public class FirstScreenAfterEnteringIPController implements Initializable {
      
      @FXML
      private void handleRegisterBtn(ActionEvent event){
-        controller = new SceneController();
+        controller = new SceneNavigationController();
           try {
               controller.switchToRegisterScene(event);
           } catch (IOException ex) {
@@ -41,7 +41,7 @@ public class FirstScreenAfterEnteringIPController implements Initializable {
     }
      @FXML
     private void buttonBackPressed(ActionEvent event) {
-         controller = new SceneController();
+         controller = new SceneNavigationController();
        
         try {
             controller.switchToMainScene(event);

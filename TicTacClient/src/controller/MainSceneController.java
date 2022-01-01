@@ -35,14 +35,14 @@ import javafx.stage.Stage;
  */
 public class MainSceneController implements Initializable {
 
-    SceneController controller;
+    SceneNavigationController controller;
 
     @FXML
     private ImageView applicationImageView;
 
     @FXML
     private void handleVsAiBtn(ActionEvent event) {
-        controller = new SceneController();
+        controller = new SceneNavigationController();
         try {
             controller.switchToPlayerVsAIScene(event);
         } catch (IOException ex) {
@@ -73,12 +73,12 @@ public class MainSceneController implements Initializable {
 
         if (result.isPresent() && text1.getText().matches("^[A-Za-z]\\w{3,25}$") || text2.getText().matches("^[A-Za-z]\\w{3,25}$")) {
 
-            controller = new SceneController();
+            controller = new SceneNavigationController();
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlayerVsPlayerView2.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlayerVsPlayerView.fxml"));
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(loader.load());
-                ((PlayerVsPlayerController2) loader.getController()).setNames(text1.getText(), text2.getText());
+                ((PlayerVsPlayerController) loader.getController()).setNames(text1.getText(), text2.getText());
                 stage.setScene(scene);
                 stage.show();
 
@@ -118,7 +118,7 @@ public class MainSceneController implements Initializable {
         //Temporarily
         boolean flag = ipVaild(ip);
         if (flag) {
-            controller = new SceneController();
+            controller = new SceneNavigationController();
             try {
                 controller.switchToOnlineScene(event);
             } catch (IOException ex) {
@@ -148,7 +148,7 @@ public class MainSceneController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        controller = new SceneController();
+        controller = new SceneNavigationController();
         applicationImageView.setImage(new Image(getClass().getResourceAsStream("/assets/splashImg.png")));
     }
 

@@ -12,14 +12,14 @@ import javafx.stage.Stage;
  *
  * @author Eslam Esmael
  */
-public class SceneController {
+public class SceneNavigationController {
 
     private Stage stage;
     private Scene scene;
     private Parent root;
 
     public void switchToPlayerVsPlayerScene(ActionEvent event) throws IOException {
-        switchToScene(event, "/view/PlayerVsPlayerView2.fxml");
+        switchToScene(event, "/view/PlayerVsPlayerView.fxml");
     }
 
     public void switchToPlayerVsAIScene(ActionEvent event) throws IOException {
@@ -31,11 +31,11 @@ public class SceneController {
     }
 
     public void switchToOnlineMainScene(ActionEvent event) throws IOException {
-        switchToScene(event, "/view/OnlineMainScene.fxml");
+        switchToScene(event, "/view/OnlineMainView.fxml");
     }
 
     public void switchToOnlineScene(ActionEvent event) throws IOException {
-        switchToScene(event, "/view/FirstScreenAfterEnteringIP.fxml");
+        switchToScene(event, "/view/FirstScreenAfterEnteringIPView.fxml");
     }
 
     public void switchToLoginScene(ActionEvent event) throws IOException {
@@ -43,7 +43,7 @@ public class SceneController {
     }
 
     public void switchToRegisterScene(ActionEvent event) throws IOException {
-        switchToScene(event, "/view/RegisterScreen.fxml");
+        switchToScene(event, "/view/RegisterScreenView.fxml");
     }
 
     private void switchToScene(ActionEvent event, String path) throws IOException {

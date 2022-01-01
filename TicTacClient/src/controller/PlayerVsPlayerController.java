@@ -29,7 +29,7 @@ import model.PlayerMove;
  *
  * @author Eslam Esmael
  */
-public class PlayerVsPlayerController2 implements Initializable {
+public class PlayerVsPlayerController implements Initializable {
 
     GameSession gameSession = new GameSession();
     boolean isXSymbol = true;
@@ -91,11 +91,11 @@ public class PlayerVsPlayerController2 implements Initializable {
 
     @FXML
     private void buttonBackPressed(ActionEvent event) {
-        SceneController controller = new SceneController();
+        SceneNavigationController controller = new SceneNavigationController();
         try {
             controller.switchToMainScene(event);
         } catch (IOException ex) {
-            Logger.getLogger(PlayerVsPlayerController2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerVsPlayerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -107,7 +107,7 @@ public class PlayerVsPlayerController2 implements Initializable {
         try {
             checkState();
         } catch (BackingStoreException ex) {
-            Logger.getLogger(PlayerVsPlayerController2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerVsPlayerController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -379,13 +379,13 @@ public class PlayerVsPlayerController2 implements Initializable {
         try {
             initPrefPlayer();
         } catch (BackingStoreException ex) {
-            Logger.getLogger(PlayerVsPlayerController2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerVsPlayerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void initPrefPlayer() throws BackingStoreException {
 
-        pref = Preferences.userNodeForPackage(PlayerVsPlayerController2.class);
+        pref = Preferences.userNodeForPackage(PlayerVsPlayerController.class);
         if (pref.nodeExists("")) {
             String fristplayerName = pref.get("fristPlayer", "");
             String secondPlayerName = pref.get("secondPlayer", "");

@@ -14,14 +14,14 @@ import javafx.stage.Stage;
  *
  * @author mina
  */
-public class WinnerAndLoser extends Thread {
+public class WinnerAndLoserVideoBuilder extends Thread {
 
     public static boolean won = true;
     Stage stage;
     ImageView iv = new ImageView();
     VBox box;
 
-    public WinnerAndLoser(boolean w) {
+    public WinnerAndLoserVideoBuilder(boolean w) {
         won = w;
         stage = new Stage();
         box = new VBox();
@@ -35,7 +35,7 @@ public class WinnerAndLoser extends Thread {
                 stage.close();
             });
         } catch (InterruptedException ex) {
-            Logger.getLogger(WinnerAndLoser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WinnerAndLoserVideoBuilder.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

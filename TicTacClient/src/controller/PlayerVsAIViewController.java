@@ -6,7 +6,7 @@
 package controller;
 
 import helper.PlayAgainDialogBuilder;
-import helper.WinnerAndLoser;
+import helper.WinnerAndLoserVideoBuilder;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
@@ -98,7 +98,7 @@ public class PlayerVsAIViewController implements Initializable {
 
     @FXML
     private void buttonBackPressed(ActionEvent event) {
-        SceneController controller = new SceneController();
+        SceneNavigationController controller = new SceneNavigationController();
 
         try {
             controller.switchToMainScene(event);
@@ -460,10 +460,10 @@ public class PlayerVsAIViewController implements Initializable {
             System.out.println("X is win");
             scorePlayerOne.setText(String.valueOf(firstPlayerScore));
             pref.putInt("firstPlayerScore", firstPlayerScore);
-            new WinnerAndLoser(firstPlayerWinner).display();
+            new WinnerAndLoserVideoBuilder(firstPlayerWinner).display();
             replayAgain("You Won!");
         } else if (secondPlayerWinner) {
-            new WinnerAndLoser(firstPlayerWinner).display();
+            new WinnerAndLoserVideoBuilder(firstPlayerWinner).display();
             System.out.println("O is win");
             computerScore.setText(String.valueOf(secondPlayerScore));
             pref.putInt("secondPlayerScore", secondPlayerScore);
