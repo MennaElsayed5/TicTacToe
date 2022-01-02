@@ -19,6 +19,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
@@ -95,9 +97,13 @@ public class GameBoardComponentController implements Initializable {
     private Label textViewPlayerOneName;
     @FXML
     private Label textViewPlayerTwoName;
+    
+    @FXML
+    ImageView imgViewPlayer2;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Image image;
         try {
             initPrefPlayer();
 
@@ -107,12 +113,16 @@ public class GameBoardComponentController implements Initializable {
         System.out.println(previousView);
         if (previousView.equals("ai")) {
             textViewPlayerTwoName.setText("Computer");
+            image=new Image("/assets/pc1.png");
+            imgViewPlayer2.setImage(image);
         } else if (previousView.equals("player")) {
-
+            image=new Image("/assets/player2.png");
+            imgViewPlayer2.setImage(image);
             System.out.println(playerOneName);
             textViewPlayerOneName.setText(playerOneName);
             textViewPlayerTwoName.setText(playerTwoName);
         }
+        
 
     }
 

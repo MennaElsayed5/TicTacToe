@@ -36,8 +36,8 @@ public class MainSceneController implements Initializable {
     SceneNavigationController controller;
     static String fname;
 
-    @FXML
-    private ImageView applicationImageView;
+//    @FXML
+//    private ImageView applicationImageView;
 
     @FXML
     private void handleVsAiBtn(ActionEvent event) {
@@ -150,7 +150,7 @@ public class MainSceneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         controller = new SceneNavigationController();
-        applicationImageView.setImage(new Image(getClass().getResourceAsStream("/assets/splashImg.png")));
+//        applicationImageView.setImage(new Image(getClass().getResourceAsStream("/assets/splashImg.png")));
     }
 
 }

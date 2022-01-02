@@ -2,20 +2,46 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="750.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FirstScreenAfterEnteringIPController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="800.0" styleClass="bodybg" stylesheets="@../assets/background.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FirstScreenAfterEnteringIPController">
    <children>
-      <Label layoutX="179.0" layoutY="168.0" prefHeight="46.0" prefWidth="243.0" text="Connect To Game">
+      <Label alignment="CENTER" layoutX="198.0" layoutY="43.0" prefHeight="46.0" prefWidth="405.0" text="Connect To Game" textFill="#343f5d">
          <font>
-            <Font size="30.0" />
+            <Font name="Forte" size="36.0" />
          </font>
       </Label>
-      <Button fx:id="btnLogin" layoutX="237.0" layoutY="279.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="128.0" text="Login" textAlignment="CENTER" />
-      <Button fx:id="btnRegister" layoutX="237.0" layoutY="367.0" mnemonicParsing="false" onAction="#handleRegisterBtn" prefHeight="46.0" prefWidth="128.0" text="Register" textAlignment="CENTER" />
-      <Button fx:id="btnBack" layoutX="236.0" layoutY="566.0" mnemonicParsing="false" onAction="#buttonBackPressed" prefHeight="46.0" prefWidth="128.0" text="Back" />
-      <Label layoutX="217.0" layoutY="325.0" text="you already have account" />
-      <Label layoutX="235.0" layoutY="413.0" text="create new account " />
+      <Button fx:id="btnLogin" layoutX="337.0" layoutY="121.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="147.0" style="-fx-background-color: white; -fx-background-radius: 12 12 12 12;" text="Login" textAlignment="CENTER" textFill="#343f5d">
+         <font>
+            <Font name="Forte" size="30.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnRegister" layoutX="337.0" layoutY="226.0" mnemonicParsing="false" onAction="#handleRegisterBtn" prefHeight="55.0" prefWidth="147.0" style="-fx-background-color: white; -fx-background-radius: 12 12 12 12;" text="Register" textAlignment="CENTER" textFill="#343f5d">
+         <font>
+            <Font name="Forte" size="30.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#buttonBackPressed" prefHeight="46.0" prefWidth="112.0" style="-fx-background-color: #3e79d5;">
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="78.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../assets/icons8-left-2-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="312.0" layoutY="186.0" text="you already have account" textFill="YELLOW">
+         <font>
+            <Font name="Comic Sans MS" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="337.0" layoutY="298.0" text="create new account " textFill="YELLOW">
+         <font>
+            <Font name="Comic Sans MS" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
