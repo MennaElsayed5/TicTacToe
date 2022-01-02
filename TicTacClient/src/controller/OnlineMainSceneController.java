@@ -34,14 +34,13 @@ public class OnlineMainSceneController implements Initializable{
     FXMLLoader fxmlLoader;
     int i=0;
     ArrayList<FXMLLoader> availablePlayers,playersInGame;
-    CustomItemAvailableListViewController item;
+  
    
     public void showAvailablePlayer()
     { 
         ObservableList observableList = FXCollections.observableArrayList();
         try {
             fxmlLoader = new FXMLLoader(getClass().getResource("/view/CustomItemAvailableListView.fxml"));
-            item= fxmlLoader.getController();
            availablePlayers.add(fxmlLoader.load());
             observableList.addAll(availablePlayers);
             availablePlayersList.setItems( observableList);
@@ -55,7 +54,6 @@ public class OnlineMainSceneController implements Initializable{
         ObservableList observableList = FXCollections.observableArrayList();
         try {
             fxmlLoader = new FXMLLoader(getClass().getResource("/view/CustomItemPlayersInGameListView.fxml"));
-            item= fxmlLoader.getController();
            playersInGame.add(fxmlLoader.load());
             observableList.addAll(playersInGame);
             playersInGameList.setItems( observableList);
@@ -68,7 +66,7 @@ public class OnlineMainSceneController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
          availablePlayers=new ArrayList<>();
          playersInGame=new ArrayList<>();
-         item=new CustomItemAvailableListViewController();
+         
     }
     
 }

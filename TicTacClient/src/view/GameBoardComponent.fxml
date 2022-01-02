@@ -105,22 +105,22 @@
             </GridPane>
          </center>
       </BorderPane>
-      <Label fx:id="label_player1" layoutX="78.0" layoutY="65.0" prefHeight="31.0" prefWidth="81.0" text="player" textAlignment="CENTER" textOverrun="CLIP">
+      <Label fx:id="textViewPlayerOneName" layoutX="78.0" layoutY="65.0" prefHeight="31.0" prefWidth="81.0" text="player" textAlignment="CENTER" textOverrun="CLIP">
          <font>
             <Font name="Arial Rounded MT Bold" size="25.0" />
          </font>
       </Label>
-      <Label fx:id="label_player2" layoutX="429.0" layoutY="65.0" text="player">
+      <Label fx:id="textViewPlayerTwoName" layoutX="429.0" layoutY="65.0" text="player">
          <font>
             <Font name="Arial Rounded MT Bold" size="25.0" />
          </font>
       </Label>
-      <Label fx:id="labelScorePlayer1" layoutX="113.0" layoutY="99.0" text="0">
+      <Label fx:id="scorePlayerOne" layoutX="113.0" layoutY="99.0" text="0">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="labelScorePlayer2" layoutX="457.0" layoutY="103.0" text="0">
+      <Label fx:id="scorePlayerTwo" layoutX="457.0" layoutY="103.0" text="0">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
@@ -130,7 +130,7 @@
             <Font name="Arial Rounded MT Bold" size="28.0" />
          </font>
       </Label>
-      <Button fx:id="buttonExit" layoutX="206.0" layoutY="646.0" mnemonicParsing="false" onAction="buttonBackPressed" prefHeight="39.0" prefWidth="132.0" text="Exit">
+      <Button fx:id="buttonExit" layoutX="206.0" layoutY="646.0" mnemonicParsing="false" onAction="#buttonBackPressed" prefHeight="39.0" prefWidth="132.0" text="Exit">
          <font>
             <Font name="Arial Rounded MT Bold" size="25.0" />
          </font>

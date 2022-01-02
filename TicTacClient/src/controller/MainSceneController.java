@@ -14,10 +14,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -36,6 +34,7 @@ import javafx.stage.Stage;
 public class MainSceneController implements Initializable {
 
     SceneNavigationController controller;
+    static String fname;
 
     @FXML
     private ImageView applicationImageView;
@@ -73,19 +72,21 @@ public class MainSceneController implements Initializable {
 
         if (result.isPresent() && text1.getText().matches("^[A-Za-z]\\w{3,25}$") || text2.getText().matches("^[A-Za-z]\\w{3,25}$")) {
 
-            controller = new SceneNavigationController();
+            PlayerVsPlayerController.playerOneName = text1.getText();
+            PlayerVsPlayerController.playerTwoName = text2.getText();
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlayerVsPlayerView.fxml"));
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(loader.load());
-                ((PlayerVsPlayerController) loader.getController()).setNames(text1.getText(), text2.getText());
+
+                //((PlayerVsPlayerController) loader.getController()).setNames(text1.getText(), text2.getText());
                 stage.setScene(scene);
                 stage.show();
 
             } catch (IOException ex) {
                 Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
