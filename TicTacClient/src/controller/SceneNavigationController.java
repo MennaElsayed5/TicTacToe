@@ -45,6 +45,10 @@ public class SceneNavigationController {
     public void switchToRegisterScene(ActionEvent event) throws IOException {
         switchToScene(event, "/view/RegisterScreenView.fxml");
     }
+    
+    public void switchToRecordedGame(ActionEvent event) throws IOException {
+        switchToScene(event, "/view/RecordedGameView.fxml");
+    }
 
     private void switchToScene(ActionEvent event, String path) throws IOException {
         root = FXMLLoader.load(getClass().getResource(path));
