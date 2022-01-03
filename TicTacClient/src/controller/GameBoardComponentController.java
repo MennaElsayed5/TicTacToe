@@ -97,7 +97,7 @@ public class GameBoardComponentController implements Initializable {
     private Label textViewPlayerOneName;
     @FXML
     private Label textViewPlayerTwoName;
-    
+
     @FXML
     ImageView imgViewPlayer2;
 
@@ -113,16 +113,15 @@ public class GameBoardComponentController implements Initializable {
         System.out.println(previousView);
         if (previousView.equals("ai")) {
             textViewPlayerTwoName.setText("Computer");
-            image=new Image("/assets/pc1.png");
+            image = new Image("/assets/pc1.png");
             imgViewPlayer2.setImage(image);
         } else if (previousView.equals("player")) {
-            image=new Image("/assets/player2.png");
+            image = new Image("/assets/player2.png");
             imgViewPlayer2.setImage(image);
             System.out.println(playerOneName);
             textViewPlayerOneName.setText(playerOneName);
             textViewPlayerTwoName.setText(playerTwoName);
         }
-        
 
     }
 
@@ -484,33 +483,31 @@ public class GameBoardComponentController implements Initializable {
     private void replayAgain(String winner) throws BackingStoreException {
 
         boolean result = PlayAgainDialogBuilder.askPlayAgain(winner);
-        if (result) {
-            clearAllVariales();
 
-            //get scene
+        try {
             Parent buttonParent;
-            try {
+            if (result) {
+                clearAllVariales();
                 if (previousView.equals("ai")) {
                     buttonParent = FXMLLoader.load(getClass().getResource("/view/PlayerVsAIView.fxml"));
                 } else {
                     buttonParent = FXMLLoader.load(getClass().getResource("/view/PlayerVsPlayerView.fxml"));
                 }
-                //generate new scene
+            } else {
+                buttonParent = FXMLLoader.load(getClass().getResource("/view/MainScene.fxml"));
+                pref.clear();
+
+            }
+
+            if (buttonParent != null) {
                 Scene buttonScene = new Scene(buttonParent);
-                //get stage information
                 Stage window = (Stage) btn00.getScene().getWindow();
                 window.setTitle("Home");
                 window.setScene(buttonScene);
                 window.show();
-            } catch (IOException ex) {
-                ex.printStackTrace();
             }
-        } else {
-            disableAllButtons(true);
-            pref.clear();
-            clearAllVariales();
-
-            //TODO navigate to main to main menu ya 5elan portsaid
+        } catch (IOException ex) {
+            Logger.getLogger(GameBoardComponentController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
