@@ -35,7 +35,7 @@ public class SceneNavigationController {
     }
 
     public void switchToOnlineScene(ActionEvent event) throws IOException {
-        switchToScene(event, "/view/FirstScreenAfterEnteringIPView.fxml");
+        switchToScene(event, "/view/LoginRegisterView.fxml");
     }
 
     public void switchToLoginScene(ActionEvent event) throws IOException {

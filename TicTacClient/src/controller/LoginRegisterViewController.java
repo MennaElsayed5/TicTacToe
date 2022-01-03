@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -30,37 +31,40 @@ import javafx.scene.layout.GridPane;
  *
  * @author menna
  */
-public class FirstScreenAfterEnteringIPController implements Initializable {
-     SceneNavigationController controller;
-     @FXML
-     private Button btnLogin;
-     
-     @FXML
-     private Button btnRegister;
-     
-     @FXML
-     private Button btnBack;
-     
-     @FXML
-     private void handleRegisterBtn(ActionEvent event){
+public class LoginRegisterViewController implements Initializable {
+
+    SceneNavigationController controller;
+    @FXML
+    private Button btnLogin;
+
+    @FXML
+    private Button btnRegister;
+
+    @FXML
+    private Button btnBack;
+
+    @FXML
+    private void handleRegisterBtn(ActionEvent event) {
         controller = new SceneNavigationController();
-          try {
-              controller.switchToRegisterScene(event);
-          } catch (IOException ex) {
-              Logger.getLogger(FirstScreenAfterEnteringIPController.class.getName()).log(Level.SEVERE, null, ex);
-          }
+        try {
+            controller.switchToRegisterScene(event);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginRegisterViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-     @FXML
+
+    @FXML
     private void buttonBackPressed(ActionEvent event) {
-         controller = new SceneNavigationController();
-       
+        controller = new SceneNavigationController();
+
         try {
             controller.switchToMainScene(event);
         } catch (IOException ex) {
             Logger.getLogger(PlayerVsAIViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }   
-     @FXML
+    }
+
+    @FXML
     private void buttonloginPressed(ActionEvent event) {
         System.out.println("Login pressed ");
         String email = "";
@@ -73,6 +77,9 @@ public class FirstScreenAfterEnteringIPController implements Initializable {
         TextField emailField = new TextField();
         PasswordField passwordFeild = new PasswordField();
         GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 100, 10, 10));
         grid.add(emailLabel, 1, 1);
         grid.add(emailField, 2, 1);
         grid.add(passwordLabel, 1, 2);
@@ -82,40 +89,40 @@ public class FirstScreenAfterEnteringIPController implements Initializable {
         dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
         Optional<String> result = dialog.showAndWait();
 
-        if (emailField.getText().isEmpty()){
+        if (emailField.getText().isEmpty()) {
             errorAlert("Please Enter Your Email");
-        } else if (passwordFeild.getText().isEmpty()){
+        } else if (passwordFeild.getText().isEmpty()) {
             errorAlert("Please Enter Your Password");
-        } else if(checkEmailvalidity(passwordFeild.getText())){
+        } else if (checkEmailvalidity(passwordFeild.getText())) {
             errorAlert("Please Enter Valid Email");
-        } else if (passwordFeild.getText().length() < 8 || passwordFeild.getText().length() > 16){
+        } else if (passwordFeild.getText().length() < 8 || passwordFeild.getText().length() > 16) {
             errorAlert("Please Enter Valid Password");
         } else {
-           controller = new SceneNavigationController();
+            controller = new SceneNavigationController();
             try {
                 controller.switchToOnlineMainScene(event);
             } catch (IOException ex) {
                 Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            }
         }
     }
 
-    public void errorAlert(String message){
+    public void errorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText("Error Dialog");
         alert.setContentText(message);
         alert.showAndWait();
     }
-    
-    public boolean checkEmailvalidity(String email){
+
+    public boolean checkEmailvalidity(String email) {
         Pattern pattern = Pattern.compile("^[\\w_\\.+]*\\@([\\w]+\\.)+[\\w]+[\\w]$");
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
-      }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+
     }
 }

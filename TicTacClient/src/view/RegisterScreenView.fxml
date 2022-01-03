@@ -20,8 +20,8 @@
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="464.0" minWidth="10.0" prefWidth="150.0" />
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints maxHeight="56.0" minHeight="8.0" prefHeight="42.0" valignment="BOTTOM" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="31.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="63.0" minHeight="8.0" prefHeight="57.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="18.0" valignment="BOTTOM" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="51.0" valignment="BOTTOM" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -35,7 +35,7 @@
       <RowConstraints maxHeight="26.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Label text="Confirm Password" textFill="#dfff03" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="9" GridPane.valignment="CENTER">
+      <Label prefHeight="35.0" prefWidth="210.0" text="Confirm Password" textFill="#dfff03" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="9" GridPane.valignment="CENTER">
          <font>
             <Font name="Comic Sans MS" size="24.0" />
          </font>
@@ -51,7 +51,7 @@
             <Insets left="10.0" />
          </GridPane.margin>
       </Label>
-      <Label text="Email" textFill="#dfff03" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+      <Label prefHeight="35.0" prefWidth="125.0" text="Email" textFill="#dfff03" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
          <font>
             <Font name="Comic Sans MS" size="24.0" />
          </font>
@@ -59,7 +59,7 @@
             <Insets left="10.0" />
          </GridPane.margin>
       </Label>
-      <Label text="Password*" textFill="#dfff03" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="CENTER">
+      <Label prefHeight="35.0" prefWidth="125.0" text="Password" textFill="#dfff03" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="CENTER">
          <font>
             <Font name="Comic Sans MS" size="24.0" />
          </font>
@@ -69,7 +69,7 @@
       </Label>
       <TextField fx:id="userNameTextField" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="375.0" promptText="Your Name" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
          <font>
-            <Font name="Forte" size="14.0" />
+            <Font name="Comic Sans MS" size="14.0" />
          </font>
          <padding>
             <Insets left="10.0" right="10.0" />
@@ -80,7 +80,7 @@
       </TextField>
       <TextField fx:id="EmailTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="375.0" promptText="your email" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
          <font>
-            <Font name="Forte" size="14.0" />
+            <Font name="Comic Sans MS" size="14.0" />
          </font>
          <padding>
             <Insets left="10.0" right="10.0" />
@@ -91,7 +91,7 @@
       </TextField>
       <TextField fx:id="passwordTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="375.0" promptText="Your Password" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
          <font>
-            <Font name="Forte" size="14.0" />
+            <Font name="Comic Sans MS" size="14.0" />
          </font>
          <padding>
             <Insets left="10.0" right="10.0" />
@@ -102,7 +102,7 @@
       </TextField>
       <TextField fx:id="confirmTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="375.0" promptText="Confirm password" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER">
          <font>
-            <Font name="Forte" size="14.0" />
+            <Font name="Comic Sans MS" size="14.0" />
          </font>
          <padding>
             <Insets left="10.0" right="10.0" />
@@ -111,19 +111,19 @@
             <Insets right="10.0" />
          </GridPane.margin>
       </TextField>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="38.0" prefWidth="464.0" text="Hello in Tic Tac Toe Game" textFill="#343f5d" GridPane.columnIndex="3" GridPane.rowIndex="1">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="38.0" prefWidth="464.0" text="Hello in Tic Tac Toe Game" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="1">
          <font>
             <Font name="Forte" size="36.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" prefHeight="91.0" prefWidth="464.0" text="Create New Account" textAlignment="CENTER" textFill="#343f5d" GridPane.columnIndex="3" GridPane.rowIndex="2">
+      <Label alignment="CENTER" prefHeight="91.0" prefWidth="464.0" text="Create New Account" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="2">
          <font>
             <Font name="Forte" size="30.0" />
          </font>
       </Label>
-      <Button fx:id="rgisterBtnToOnline" alignment="CENTER" cache="true" contentDisplay="CENTER" maxWidth="-Infinity" mnemonicParsing="false" onAction="#btnRegisterToMainOnline" prefHeight="37.0" prefWidth="448.0" style="-fx-background-color: #fdc810;" text="Register" textAlignment="CENTER" textFill="#343f5d" GridPane.columnIndex="3" GridPane.rowIndex="11">
+      <Button fx:id="rgisterBtnToOnline" alignment="CENTER" cache="true" contentDisplay="CENTER" defaultButton="true" maxWidth="-Infinity" mnemonicParsing="false" onAction="#btnRegisterToMainOnline" prefHeight="42.0" prefWidth="447.0" style="-fx-background-color: fdc810; -fx-background-radius: 12 12 12 12;" text="Register" textAlignment="CENTER" textFill="#343f5d" GridPane.columnIndex="3" GridPane.rowIndex="11">
          <font>
-            <Font name="Comic Sans MS" size="18.0" />
+            <Font name="Comic Sans MS Bold" size="20.0" />
          </font>
       </Button>
       <ImageView fitHeight="31.0" fitWidth="41.0" pickOnBounds="true" GridPane.columnIndex="3" GridPane.rowIndex="4">
@@ -151,7 +151,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </Button>
-      <ImageView fitHeight="33.0" fitWidth="70.0" nodeOrientation="INHERIT" pickOnBounds="true" GridPane.columnIndex="2">
+      <ImageView fitHeight="30.0" fitWidth="50.0" nodeOrientation="INHERIT" pickOnBounds="true" GridPane.columnIndex="2">
          <image>
             <Image url="@../assets/icons8-left-2-50.png" />
          </image>
