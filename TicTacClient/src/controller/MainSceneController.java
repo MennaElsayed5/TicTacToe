@@ -102,30 +102,37 @@ public class MainSceneController implements Initializable {
         try {
             TextInputDialog dialog = new TextInputDialog();
             dialog.setTitle("Dialog");
-            dialog.setContentText("Please Enter The Server IP Address :" + ip);
+            dialog.setContentText("Please Enter The Server IP Address : ");
             Optional<String> result = dialog.showAndWait();
             if (result.isPresent()) {
-
+                //TODO connect to server
             }
             ip = result.get();
+            if (ipVaild(ip) == true) {
+                try {
+                    controller = new SceneNavigationController();
+                    controller.switchToOnlineScene(event);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error Dialog");
+                alert.setContentText("Wrong IP Try Again");
+                alert.showAndWait();
+            }
         } catch (NoSuchElementException e) {
-            ex_flag = false;
-        }
-        boolean flag = ipVaild(ip);
-        if (flag) {
-            controller = new SceneNavigationController();
             try {
-                controller.switchToOnlineScene(event);
+                ex_flag = false;
+                
+                controller = new SceneNavigationController();
+                controller.switchToMainScene(event);
             } catch (IOException ex) {
                 Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error Dialog");
-            alert.setContentText("Wrong IP Try Again");
-            alert.showAndWait();
         }
+
     }
 
     public boolean ipVaild(String Ip) {
