@@ -137,9 +137,9 @@
             <Font name="Arial Rounded MT Bold" size="25.0" />
          </font>
          <graphic>
-            <ImageView fitHeight="29.0" fitWidth="41.0" pickOnBounds="true">
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true">
                <image>
-                  <Image url="@../assets/icons8-left-2-50.png" />
+                  <Image url="@../assets/backImage.png" />
                </image>
             </ImageView>
          </graphic>
