@@ -23,8 +23,6 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -37,8 +35,6 @@ public class MainSceneController implements Initializable {
     SceneNavigationController controller;
     static String fname;
 
-//    @FXML
-//    private ImageView applicationImageView;
     @FXML
     private void handleVsAiBtn(ActionEvent event) {
         controller = new SceneNavigationController();
@@ -103,10 +99,6 @@ public class MainSceneController implements Initializable {
     private void handleVsPlayerOnlineBtn(ActionEvent event) {
         String ip = "";
         boolean ex_flag = true;
-        //  validation IpVaild = new validation();
-        //  boolean flagIp = IpVaild.isStringNumeric(ip);
-        //  int countIP = IpVaild.periodCount(ip);
-        // int octIp = IpVaild.parseOctetToInt(ip);
         try {
             TextInputDialog dialog = new TextInputDialog();
             dialog.setTitle("Dialog");
@@ -119,7 +111,6 @@ public class MainSceneController implements Initializable {
         } catch (NoSuchElementException e) {
             ex_flag = false;
         }
-        //Temporarily
         boolean flag = ipVaild(ip);
         if (flag) {
             controller = new SceneNavigationController();
@@ -153,7 +144,6 @@ public class MainSceneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         controller = new SceneNavigationController();
-//        applicationImageView.setImage(new Image(getClass().getResourceAsStream("/assets/splashImg.png")));
     }
 
 }
