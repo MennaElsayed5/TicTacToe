@@ -41,7 +41,7 @@
             <Insets bottom="5.0" left="40.0" right="40.0" top="5.0" />
          </padding>
          <graphic>
-            <ImageView fitHeight="37.0" fitWidth="151.0" pickOnBounds="true" >
+            <ImageView fitHeight="37.0" fitWidth="151.0" pickOnBounds="true">
                <image>
                   <Image url="@../assets/muti.png" />
                </image>
@@ -53,7 +53,7 @@
             <Insets bottom="5.0" left="40.0" right="40.0" top="5.0" />
          </padding>
          <graphic>
-            <ImageView fitHeight="39.0" fitWidth="157.0" pickOnBounds="true" preserveRatio="true" >
+            <ImageView fitHeight="39.0" fitWidth="157.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/online%20.png" />
                </image>
@@ -65,18 +65,18 @@
             <Insets bottom="5.0" left="40.0" right="40.0" top="5.0" />
          </padding>
          <graphic>
-            <ImageView fitHeight="31.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true" >
+            <ImageView fitHeight="31.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/About.png" />
                </image></ImageView>
          </graphic>
       </Button>
-      <Button fx:id="exitBtn" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="50.0" prefWidth="235.0" style="-fx-background-color: #f6c913; -fx-background-radius: 12 12 12 12;" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+      <Button fx:id="exitBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="50.0" prefWidth="235.0" style="-fx-background-color: #f6c913; -fx-background-radius: 12 12 12 12;" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
          <padding>
             <Insets bottom="5.0" left="40.0" right="40.0" top="5.0" />
          </padding>
          <graphic>
-            <ImageView fitHeight="32.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" >
+            <ImageView fitHeight="32.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/Exit.png" />
                </image></ImageView>

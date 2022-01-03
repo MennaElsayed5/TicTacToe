@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,6 +45,11 @@ public class MainSceneController implements Initializable {
             Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    @FXML
+    private void handleExitButton(ActionEvent event){
+        Platform.exit();
+    }
 
     @FXML
     private void handleVsPlayerBtn(ActionEvent event) {
@@ -69,7 +75,7 @@ public class MainSceneController implements Initializable {
         dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
         Optional<String> result = dialog.showAndWait();
 
-        if (result.isPresent() && text1.getText().matches("^[A-Za-z]\\w{3,25}$") || text2.getText().matches("^[A-Za-z]\\w{3,25}$")) {
+        if (result.isPresent()) {
 
             PlayerVsPlayerController.playerOneName = text1.getText();
             PlayerVsPlayerController.playerTwoName = text2.getText();
@@ -87,11 +93,17 @@ public class MainSceneController implements Initializable {
             }
 
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error Dialog");
-            alert.setContentText("Wrong name Try Again");
-            alert.showAndWait();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainScene.fxml"));
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(loader.load());
+
+                //((PlayerVsPlayerController) loader.getController()).setNames(text1.getText(), text2.getText());
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException ex) {
+                Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -125,7 +137,7 @@ public class MainSceneController implements Initializable {
         } catch (NoSuchElementException e) {
             try {
                 ex_flag = false;
-                
+
                 controller = new SceneNavigationController();
                 controller.switchToMainScene(event);
             } catch (IOException ex) {
