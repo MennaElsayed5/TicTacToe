@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -38,7 +39,6 @@ public class MainSceneController implements Initializable {
 
 //    @FXML
 //    private ImageView applicationImageView;
-
     @FXML
     private void handleVsAiBtn(ActionEvent event) {
         controller = new SceneNavigationController();
@@ -61,6 +61,9 @@ public class MainSceneController implements Initializable {
         TextField text1 = new TextField();
         TextField text2 = new TextField();
         GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 100, 10, 10));
         grid.add(namePlayer1, 1, 1);
         grid.add(text1, 2, 1);
         grid.add(namePlayer2, 1, 2);
