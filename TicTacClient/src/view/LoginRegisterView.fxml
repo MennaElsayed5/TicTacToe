@@ -24,15 +24,6 @@
             <Font name="Forte" size="30.0" />
          </font>
       </Button>
-      <Button fx:id="btnBack" layoutX="20.0" layoutY="15.0" mnemonicParsing="false" onAction="#buttonBackPressed" prefHeight="46.0" prefWidth="112.0" style="-fx-background-color: #3e79d5;">
-         <graphic>
-            <ImageView fitHeight="30.0" fitWidth="50.0" pickOnBounds="true">
-               <image>
-                  <Image url="@../assets/icons8-left-2-50.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
       <Label layoutX="317.0" layoutY="176.0" text="you already have account" textFill="YELLOW">
          <font>
             <Font name="Comic Sans MS" size="18.0" />
@@ -43,5 +34,14 @@
             <Font name="Comic Sans MS" size="18.0" />
          </font>
       </Label>
+      <Button fx:id="btnBack1" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#buttonBackPressed" prefHeight="46.0" prefWidth="112.0" style="-fx-background-color: #3e79d5;">
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="50.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../assets/backImage.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>
