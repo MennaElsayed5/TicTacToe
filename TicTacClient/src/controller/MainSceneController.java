@@ -94,13 +94,8 @@ public class MainSceneController implements Initializable {
 
         } else {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainScene.fxml"));
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(loader.load());
-
-                //((PlayerVsPlayerController) loader.getController()).setNames(text1.getText(), text2.getText());
-                stage.setScene(scene);
-                stage.show();
+                    controller = new SceneNavigationController();
+                    controller.switchToOnlineScene(event);
             } catch (IOException ex) {
                 Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
             }
