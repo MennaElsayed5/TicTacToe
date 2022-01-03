@@ -59,10 +59,10 @@ public class FirstScreenAfterEnteringIPController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(PlayerVsAIViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
     }   
      @FXML
     private void buttonloginPressed(ActionEvent event) {
+        System.out.println("Login pressed ");
         String email = "";
         String password = "";
         boolean flag = true;
