@@ -95,7 +95,7 @@ public class MainSceneController implements Initializable {
         } else {
             try {
                     controller = new SceneNavigationController();
-                    controller.switchToOnlineScene(event);
+                    controller.switchToMainScene(event);
             } catch (IOException ex) {
                 Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
             }
