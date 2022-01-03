@@ -55,7 +55,7 @@ public class MainSceneController implements Initializable {
         String namePlayer22 = "";
         boolean flag = true;
         Dialog<String> dialog = new Dialog<>();
-        dialog.setTitle("Dialog");
+        dialog.setTitle("Enter Names");
         Label namePlayer1 = new Label("Name player 1: " + namePlayer11);
         Label namePlayer2 = new Label("Name player 2: " + namePlayer22);
         TextField text1 = new TextField();

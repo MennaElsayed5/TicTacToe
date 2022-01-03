@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : menna
 */
 .bodybg{
- -fx-background-image: url('/assets/mainScreenLocal.png');
+ -fx-background-image: url('/assets/Background1.png');
 -fx-background-size: 100% 100%;
 }
 
