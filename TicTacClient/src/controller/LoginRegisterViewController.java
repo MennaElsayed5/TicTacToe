@@ -5,7 +5,7 @@
  */
 package controller;
 
-import helper.ConenctionHelper;
+import helper.ConnectionHelper;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -132,9 +132,9 @@ public class LoginRegisterViewController implements Initializable {
     public void login(String email, String password) {
         try {
             
-            ConenctionHelper.connectToServer();
+            ConnectionHelper.connectToServer();
             Player obj = new Player(email, password);
-            (ConenctionHelper.getObjectOutputStream()).writeObject(obj);
+            (ConnectionHelper.getObjectOutputStream()).writeObject(obj);
         } catch (IOException ex) {
             Logger.getLogger(LoginRegisterViewController.class.getName()).log(Level.SEVERE, null, ex);
         }

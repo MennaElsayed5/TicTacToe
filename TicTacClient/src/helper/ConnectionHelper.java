@@ -18,36 +18,33 @@ import javafx.scene.control.Alert;
  *
  * @author Eslam Esmael
  */
-public class ConenctionHelper {
+public class ConnectionHelper {
 
     private static Socket socket = null;
     private static ObjectOutputStream objOutputStream;
     private static ObjectInputStream objInputStream;
-  //  private static PrintStream ps;
     private static final String MY_IP = "10.178.241.76";
 
     public static void connectToServer() {
         if (socket == null) {
             try {
                 socket = new Socket(MY_IP, 5005);
-            //     ps = new PrintStream(socket.getOutputStream());
                 objOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 objInputStream = new ObjectInputStream(socket.getInputStream());
             } catch (IOException ex) {
-                //System.out.println("Connot connect socket to the server");
                 showErrorDialog("Cannot connect to the server!\nPlease check your connection.");
             }
         }
 
     }
 
-    public static void disconnectToServer() {
+    public static void disconnectFromServer() {
         try {
             objOutputStream.close();
             objInputStream.close();
             socket.close();
         } catch (IOException ex) {
-            Logger.getLogger(ConenctionHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConnectionHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

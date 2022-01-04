@@ -5,7 +5,7 @@
  */
 package controller;
 
-import helper.ConenctionHelper;
+import helper.ConnectionHelper;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,8 +33,6 @@ public class RegisterScreenController implements Initializable {
     private TextField EmailTextField;
     @FXML
     private PasswordField passwordTextField;
-    @FXML
-    private PasswordField confirmTextField;
 
     @FXML
     private void buttonBackPressed(ActionEvent event) {
@@ -51,13 +49,10 @@ public class RegisterScreenController implements Initializable {
     @FXML
     private void btnRegisterToMainOnline(ActionEvent event) {
         boolean flagName = isValidUsername(userNameTextField.getText());
-        boolean flagEmail = checkEmailvalidity(EmailTextField.getText());
-        boolean flagPassword = isaValidpassword(passwordTextField.getText());
-        boolean flagConPassword = false;
-        if (passwordTextField.getText().equals(confirmTextField.getText())) {
-            flagConPassword = true;
-        }
-        if (flagName && flagEmail && flagPassword && flagConPassword) {
+        boolean flagEmail = isValidEmail(EmailTextField.getText());
+        boolean flagPassword = isaValidPassword(passwordTextField.getText());
+
+        if (flagName && flagEmail && flagPassword) {
             register("menna", "menna@gmail.com", "11111111");
             SceneNavigationController controller = new SceneNavigationController();
             try {
@@ -84,28 +79,21 @@ public class RegisterScreenController implements Initializable {
             } else {
                 passwordTextField.setText("");
             }
-            if (!flagConPassword) {
-                errorAlert("Not confirmed passowrd");
-                confirmTextField.clear();
-            } else {
-
-                confirmTextField.setText("");
-            }
         }
 
     }
 
     public void register(String name, String email, String password) {
         try {
-            ConenctionHelper.connectToServer();
+            ConnectionHelper.connectToServer();
             Player obj = new Player(name, email, password);
-            (ConenctionHelper.getObjectOutputStream()).writeObject(obj);
+            (ConnectionHelper.getObjectOutputStream()).writeObject(obj);
         } catch (IOException ex) {
             Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static boolean isValidUsername(String name) {
+    public boolean isValidUsername(String name) {
         String regex = "^[A-Za-z]\\w{2,29}$";
         Pattern p = Pattern.compile(regex);
         if (name == null) {
@@ -119,7 +107,7 @@ public class RegisterScreenController implements Initializable {
         return m.matches();
     }
 
-    public static boolean isaValidpassword(String password) {
+    public boolean isaValidPassword(String password) {
         if (!((password.length() >= 8) && (password.length() <= 29))) {
             return false;
         }
@@ -132,7 +120,7 @@ public class RegisterScreenController implements Initializable {
         return true;
     }
 
-    public boolean checkEmailvalidity(String email) {
+    public boolean isValidEmail(String email) {
         Pattern pattern = Pattern.compile("^[\\w_\\.+]*\\@([\\w]+\\.)+[\\w]+[\\w]$");
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
