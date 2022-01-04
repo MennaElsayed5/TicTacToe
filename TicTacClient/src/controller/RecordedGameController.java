@@ -1,10 +1,9 @@
 package controller;
 
-import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 import model.PlayerMove;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import java.io.File;
@@ -14,8 +13,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.net.URL;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -24,7 +21,6 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 /**
@@ -79,8 +75,7 @@ public class RecordedGameController {
 
     @FXML
     private void handleButtonStartRecord(ActionEvent event) {
-
-        arr = game("game17-25-57.txt");
+        arr = game(fileName);
         try {
             final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.scheduleAtFixedRate(new Runnable() {
@@ -125,7 +120,7 @@ public class RecordedGameController {
 
         controller = new SceneNavigationController();
         try {
-            controller.switchToMainScene(event);
+            controller.switchToOnlineMainScene(event);
         } catch (IOException ex) {
             Logger.getLogger(RecordedGameController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -241,6 +236,10 @@ public class RecordedGameController {
         });
         t.setDaemon(true);
         t.start();
+    }
+    
+     public void setFileName(String fileName){
+        this.fileName = fileName;
     }
 
 }

@@ -5,21 +5,22 @@
  */
 package controller;
 
-import controller.CustomItems.CustomItemAvailableListViewController;
-import java.awt.Desktop.Action;
+
+import controller.CustomItems.CustomItemRecordedGameController;
+import static controller.GameBoardComponentController.playerOneName;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.BackingStoreException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
 
@@ -27,49 +28,74 @@ import javafx.scene.control.ListView;
  *
  * @author mina
  */
-public class OnlineMainSceneController implements Initializable{
+public class OnlineMainSceneController implements Initializable {
+
     @FXML
     ListView availablePlayersList;
-    
+
     @FXML
     ListView playersInGameList;
     
+    @FXML
+    ListView recordedGamesListView;
+
     SceneNavigationController controller;
     FXMLLoader fxmlLoader;
-    int i=0;
-    ArrayList<FXMLLoader> availablePlayers,playersInGame;
-    CustomItemAvailableListViewController item;
-   
-    public void showAvailablePlayer()
-    { 
-        ObservableList observableList = FXCollections.observableArrayList();
+    int i = 0;
+    ObservableList observableAvailableList, observablePlayerInGameList,observableRecordeedList;
+    private final String DIRNAME = "RecordedGames";
+
+    public void showRecordedList() {
+        String[] arr = getFiles();
+        System.out.println(observableRecordeedList.size()+"observable size"+arr.length);
+            for(int j=0;j<arr.length&&observableRecordeedList.size()<arr.length;j++){
+                    try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("/view/CustomItemRecordedListView.fxml"));
+            observableRecordeedList.add(fxmlLoader.load());
+            ((CustomItemRecordedGameController) fxmlLoader.getController()).setInfo(arr[j]);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            }
+            recordedGamesListView.refresh();
+    }
+    public void clearObservables()
+    {
+    observableRecordeedList.clear();
+    }
+
+    public String[] getFiles() {
+        File recordedGames = new File(DIRNAME);
+        String[] gameFiles = recordedGames.list();
+        return gameFiles;
+    }
+
+    public void showAvailablePlayer() {
+
         try {
             fxmlLoader = new FXMLLoader(getClass().getResource("/view/CustomItemAvailableListView.fxml"));
-            item= fxmlLoader.getController();
-           availablePlayers.add(fxmlLoader.load());
-            observableList.addAll(availablePlayers);
-            availablePlayersList.setItems( observableList);
+            observableAvailableList.add(fxmlLoader.load());
+            availablePlayersList.refresh();
+
         } catch (IOException ex) {
             Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
         showPlayersInGame();
     }
-    public void showPlayersInGame()
-    { 
-        ObservableList observableList = FXCollections.observableArrayList();
+
+    public void showPlayersInGame() {
         try {
             fxmlLoader = new FXMLLoader(getClass().getResource("/view/CustomItemPlayersInGameListView.fxml"));
-            item= fxmlLoader.getController();
-           playersInGame.add(fxmlLoader.load());
-            observableList.addAll(playersInGame);
-            playersInGameList.setItems( observableList);
+            observablePlayerInGameList.add(fxmlLoader.load());
+            playersInGameList.refresh();
         } catch (IOException ex) {
             Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
-    public void handleRecordButton(ActionEvent event){
+    public void handleRecordButton(ActionEvent event) {
         controller = new SceneNavigationController();
         try {
             controller.switchToRecordedGame(event);
@@ -77,12 +103,26 @@ public class OnlineMainSceneController implements Initializable{
             Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+     @FXML
+    private void buttonBackPressed(ActionEvent event) {
+        
+        try {
+            controller.switchToMainScene(event);
+        } catch (IOException ex) {
+            Logger.getLogger(PlayerVsPlayerController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-         availablePlayers=new ArrayList<>();
-         playersInGame=new ArrayList<>();
-         item=new CustomItemAvailableListViewController();
+        controller = new SceneNavigationController();
+        observableAvailableList = FXCollections.observableArrayList();
+        availablePlayersList.setItems(observableAvailableList);
+        observablePlayerInGameList = FXCollections.observableArrayList();
+        playersInGameList.setItems(observablePlayerInGameList);
+        observableRecordeedList=FXCollections.observableArrayList();
+        recordedGamesListView.setItems(observableRecordeedList);
+
     }
-   
+
 }

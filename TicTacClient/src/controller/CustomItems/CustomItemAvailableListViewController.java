@@ -27,11 +27,10 @@ public class CustomItemAvailableListViewController {
     String name;
     int i=0;
     
-    @FXML
-    public void setInfo()
+
+    public void setInfo(String name)
     {
-     
-        itemListTextField.setText("mina"+i++);
+        itemListTextField.setText(name);
     }
     
 }

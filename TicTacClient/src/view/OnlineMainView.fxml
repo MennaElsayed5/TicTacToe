@@ -14,7 +14,6 @@
    <children>
       <ListView fx:id="availablePlayersList" layoutX="478.0" layoutY="60.0" prefHeight="236.0" prefWidth="216.0" />
       <ListView fx:id="playersInGameList" layoutX="478.0" layoutY="334.0" prefHeight="208.0" prefWidth="216.0" />
-      <Button fx:id="addPlayer" layoutX="459.0" layoutY="24.0" mnemonicParsing="false" onAction="#showAvailablePlayer" text="Button" />
       <TabPane layoutX="14.0" layoutY="67.0" prefHeight="458.0" prefWidth="455.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="History">
@@ -26,7 +25,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Leader Board">
+          <Tab fx:id="leaderBoardTab" text="Leader Board">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="431.0" prefWidth="304.0">
                      <children>
@@ -35,20 +34,29 @@
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab onClosed="#clearObservables" onSelectionChanged="#showRecordedList" text="Recorded Game">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="recordedGamesListView" prefHeight="433.0" prefWidth="455.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
-      <TextField disable="true" layoutX="87.0" layoutY="22.0" prefHeight="29.0" prefWidth="153.0" text="mina">
+      <TextField disable="true" layoutX="191.0" layoutY="22.0" prefHeight="29.0" prefWidth="153.0" text="mina">
          <font>
             <Font size="13.0" />
          </font>
       </TextField>
-      <TextField disable="true" layoutX="341.0" layoutY="22.0" prefHeight="29.0" prefWidth="59.0" text="200">
+      <TextField disable="true" layoutX="410.0" layoutY="21.0" prefHeight="29.0" prefWidth="59.0" text="200">
          <font>
             <Font size="13.0" />
          </font>
       </TextField>
-      <Text layoutX="37.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name :" />
-      <Text layoutX="293.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score :" />
+      <Text layoutX="144.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name :" />
+      <Text layoutX="361.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score :" />
       <Text layoutX="541.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Players in Game">
          <font>
             <Font size="13.0" />
@@ -59,6 +67,6 @@
             <Font size="13.0" />
          </font>
       </Text>
-      <Button fx:id="recordButton" layoutX="394.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleRecordButton" text="record" />
+      <Button fx:id="buttonExit" layoutX="18.0" layoutY="7.0" mnemonicParsing="false" onAction="#buttonBackPressed" prefHeight="29.0" prefWidth="91.0" text="LogOut" />
    </children>
 </AnchorPane>
