@@ -36,7 +36,7 @@
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                      </padding>
                      <font>
-                        <Font name="Broadway" size="27.0" />
+                        <Font name="Forte" size="33.0" />
                      </font>
                   </Button>
                   <Button fx:id="btn01" minHeight="-Infinity" mnemonicParsing="false" onAction="#buttonOnePressed" prefHeight="80.0" prefWidth="125.0" style="-fx-background-color: #fdc810;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
@@ -44,7 +44,7 @@
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                      </padding>
                      <font>
-                        <Font name="Broadway" size="27.0" />
+                        <Font name="Forte" size="33.0" />
                      </font>
                   </Button>
                   <Button fx:id="btn02" minHeight="-Infinity" mnemonicParsing="false" onAction="#buttonOnePressed" prefHeight="80.0" prefWidth="125.0" style="-fx-background-color: #fdc810;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
@@ -52,7 +52,7 @@
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                      </padding>
                      <font>
-                        <Font name="Broadway" size="27.0" />
+                        <Font name="Forte" size="33.0" />
                      </font>
                   </Button>
                   <Button fx:id="btn10" minHeight="-Infinity" mnemonicParsing="false" onAction="#buttonOnePressed" prefHeight="80.0" prefWidth="125.0" style="-fx-background-color: #fdc810;" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -60,7 +60,7 @@
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                      </padding>
                      <font>
-                        <Font name="Broadway" size="27.0" />
+                        <Font name="Forte" size="33.0" />
                      </font>
                   </Button>
                   <Button fx:id="btn11" minHeight="-Infinity" mnemonicParsing="false" onAction="#buttonOnePressed" prefHeight="80.0" prefWidth="125.0" style="-fx-background-color: #fdc810;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -68,15 +68,15 @@
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                      </padding>
                      <font>
-                        <Font name="Broadway" size="27.0" />
+                        <Font name="Forte" size="33.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btn12" minHeight="-Infinity" mnemonicParsing="false" onAction="#buttonOnePressed" prefHeight="80.0" prefWidth="125.0" style="-fx-background-color: #fdc810;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button fx:id="btn12" minHeight="-Infinity" mnemonicParsing="false" onAction="#buttonOnePressed" prefHeight="80.0" prefWidth="125.0" style="-fx-background-color: #fdc810;" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <padding>
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                      </padding>
                      <font>
-                        <Font name="Broadway" size="27.0" />
+                        <Font name="Forte" size="33.0" />
                      </font>
                   </Button>
                   <Button fx:id="btn20" minHeight="-Infinity" mnemonicParsing="false" onAction="#buttonOnePressed" prefHeight="80.0" prefWidth="125.0" style="-fx-background-color: #fdc810;" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
@@ -84,7 +84,7 @@
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                      </padding>
                      <font>
-                        <Font name="Broadway" size="27.0" />
+                        <Font name="Forte" size="33.0" />
                      </font>
                   </Button>
                   <Button fx:id="btn21" minHeight="-Infinity" mnemonicParsing="false" onAction="#buttonOnePressed" prefHeight="80.0" prefWidth="125.0" style="-fx-background-color: #fdc810;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
@@ -92,7 +92,7 @@
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                      </padding>
                      <font>
-                        <Font name="Broadway" size="27.0" />
+                        <Font name="Forte" size="33.0" />
                      </font>
                   </Button>
                   <Button fx:id="btn22" minHeight="-Infinity" mnemonicParsing="false" onAction="#buttonOnePressed" prefHeight="80.0" prefWidth="125.0" style="-fx-background-color: #fdc810;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
@@ -100,7 +100,7 @@
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                      </padding>
                      <font>
-                        <Font name="Broadway" size="27.0" />
+                        <Font name="Forte" size="33.0" />
                      </font>
                   </Button>
                </children>
@@ -132,17 +132,10 @@
             <Font name="Forte" size="28.0" />
          </font>
       </Label>
-      <Button fx:id="buttonExit" layoutX="22.0" layoutY="17.0" mnemonicParsing="false" onAction="#buttonBackPressed" prefHeight="47.0" prefWidth="101.0" style="-fx-background-color: #3e79d5;">
+      <Button fx:id="buttonExit" layoutX="18.0" layoutY="21.0" mnemonicParsing="false" onAction="#buttonBackPressed" prefHeight="49.0" prefWidth="102.0" style="-fx-background-color: #3e79d5;">
          <font>
             <Font name="Arial Rounded MT Bold" size="25.0" />
          </font>
-         <graphic>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true">
-               <image>
-                  <Image url="@../assets/backImage.png" />
-               </image>
-            </ImageView>
-         </graphic>
       </Button>
       <ImageView fx:id="imgViewPlayer2" fitHeight="75.0" fitWidth="145.0" layoutX="507.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -152,6 +145,11 @@
       <ImageView fitHeight="75.0" fitWidth="75.0" layoutX="200.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/playerVsPc.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="29.0" layoutY="26.0" pickOnBounds="true">
+         <image>
+            <Image url="@../assets/backImage.png" />
          </image>
       </ImageView>
    </children>

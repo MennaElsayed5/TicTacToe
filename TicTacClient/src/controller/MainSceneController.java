@@ -1,5 +1,7 @@
 package controller;
 
+import com.sun.media.jfxmedia.locator.ConnectionHolder;
+import helper.ConnectionHelper;
 import java.io.IOException;
 import java.net.URL;
 import java.util.NoSuchElementException;
@@ -45,11 +47,6 @@ public class MainSceneController implements Initializable {
             Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    @FXML
-    private void handleExitButton(ActionEvent event){
-        Platform.exit();
-    }
 
     @FXML
     private void handleVsPlayerBtn(ActionEvent event) {
@@ -77,25 +74,33 @@ public class MainSceneController implements Initializable {
 
         if (result.isPresent()) {
 
-            PlayerVsPlayerController.playerOneName = text1.getText();
-            PlayerVsPlayerController.playerTwoName = text2.getText();
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlayerVsPlayerView.fxml"));
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(loader.load());
+            if (!text1.getText().isEmpty() && !text2.getText().isEmpty()) {
+                PlayerVsPlayerController.playerOneName = text1.getText();
+                PlayerVsPlayerController.playerTwoName = text2.getText();
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlayerVsPlayerView.fxml"));
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    Scene scene = new Scene(loader.load());
 
-                //((PlayerVsPlayerController) loader.getController()).setNames(text1.getText(), text2.getText());
-                stage.setScene(scene);
-                stage.show();
+                    //((PlayerVsPlayerController) loader.getController()).setNames(text1.getText(), text2.getText());
+                    stage.setScene(scene);
+                    stage.show();
 
-            } catch (IOException ex) {
-                Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Invalid user Name");
+                alert.setHeaderText("Error Dialog");
+                alert.setContentText("Please Enter user name for both players ");
+                alert.showAndWait();
             }
 
         } else {
             try {
-                    controller = new SceneNavigationController();
-                    controller.switchToMainScene(event);
+                controller = new SceneNavigationController();
+                controller.switchToMainScene(event);
             } catch (IOException ex) {
                 Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -104,6 +109,8 @@ public class MainSceneController implements Initializable {
 
     @FXML
     private void handleVsPlayerOnlineBtn(ActionEvent event) {
+        
+        
         String ip = "";
         boolean ex_flag = true;
         try {
@@ -115,8 +122,9 @@ public class MainSceneController implements Initializable {
                 //TODO connect to server
             }
             ip = result.get();
-            if (ipVaild(ip) == true) {
+            if (isIPVaild(ip) == true) {
                 try {
+                    //TODO check for server connection 
                     controller = new SceneNavigationController();
                     controller.switchToOnlineScene(event);
                 } catch (IOException ex) {
@@ -132,7 +140,6 @@ public class MainSceneController implements Initializable {
         } catch (NoSuchElementException e) {
             try {
                 ex_flag = false;
-
                 controller = new SceneNavigationController();
                 controller.switchToMainScene(event);
             } catch (IOException ex) {
@@ -141,12 +148,19 @@ public class MainSceneController implements Initializable {
         }
 
     }
+    
+    @FXML
+    private void handleExitButton(ActionEvent event) {
+        Platform.exit();
+        ConnectionHelper.disconnectFromServer();
+    }
 
-    public boolean ipVaild(String Ip) {
+    public boolean isIPVaild(String Ip) {
         if (Ip == null) {
             return false;
         }
-        String ip = "^(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|[1-9])\\."
+        String ip = "^"
+                + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|[1-9])\\."
                 + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
                 + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
                 + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)$";

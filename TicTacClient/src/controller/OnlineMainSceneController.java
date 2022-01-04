@@ -6,15 +6,15 @@
 package controller;
 
 
+
 import controller.CustomItems.CustomItemRecordedGameController;
-import static controller.GameBoardComponentController.playerOneName;
+import helper.ConnectionHelper;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.prefs.BackingStoreException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -41,7 +41,6 @@ public class OnlineMainSceneController implements Initializable {
 
     SceneNavigationController controller;
     FXMLLoader fxmlLoader;
-    int i = 0;
     ObservableList observableAvailableList, observablePlayerInGameList,observableRecordeedList;
     private final String DIRNAME = "RecordedGames";
 
@@ -71,8 +70,12 @@ public class OnlineMainSceneController implements Initializable {
         return gameFiles;
     }
 
-    public void showAvailablePlayer() {
+ 
 
+
+    
+    public void showAvailablePlayer()
+    { 
         try {
             fxmlLoader = new FXMLLoader(getClass().getResource("/view/CustomItemAvailableListView.fxml"));
             observableAvailableList.add(fxmlLoader.load());
@@ -103,6 +106,7 @@ public class OnlineMainSceneController implements Initializable {
             Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
      @FXML
     private void buttonBackPressed(ActionEvent event) {
         
@@ -112,6 +116,19 @@ public class OnlineMainSceneController implements Initializable {
             Logger.getLogger(PlayerVsPlayerController.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }
+
+    
+    @FXML
+    public void handelLogoutButton(ActionEvent event){
+    controller = new SceneNavigationController();
+        try {
+            ConnectionHelper.disconnectFromServer();
+            controller.switchToOnlineScene(event);
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
