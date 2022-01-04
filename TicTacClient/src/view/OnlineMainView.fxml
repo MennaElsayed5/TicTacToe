@@ -69,7 +69,6 @@
       </Text>
 
       <Button fx:id="buttonExit" layoutX="18.0" layoutY="7.0" mnemonicParsing="false" onAction="#buttonBackPressed" prefHeight="29.0" prefWidth="91.0" text="LogOut" />
-      <Button fx:id="recordButton" layoutX="394.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleRecordButton" text="record" />
       <Button fx:id="BtnLogout" layoutX="37.0" layoutY="510.0" mnemonicParsing="false" text="logout" />
    </children>
 </AnchorPane>
