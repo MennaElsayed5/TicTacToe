@@ -34,14 +34,11 @@
             <Font name="Comic Sans MS" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="btnBack1" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#buttonBackPressed" prefHeight="46.0" prefWidth="112.0" style="-fx-background-color: #3e79d5;">
-         <graphic>
-            <ImageView fitHeight="30.0" fitWidth="50.0" pickOnBounds="true">
-               <image>
-                  <Image url="@../assets/backImage.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
+      <Button fx:id="btnBack1" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#buttonBackPressed" prefHeight="62.0" prefWidth="112.0" style="-fx-background-color: #3e79d5;" />
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="30.0" layoutY="19.0" pickOnBounds="true">
+         <image>
+            <Image url="@../assets/backImage.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

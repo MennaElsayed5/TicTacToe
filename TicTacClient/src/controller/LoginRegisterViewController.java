@@ -5,7 +5,11 @@
  */
 package controller;
 
+import helper.ConenctionHelper;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -26,6 +30,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import model.Player;
 
 /**
  *
@@ -42,7 +47,7 @@ public class LoginRegisterViewController implements Initializable {
 
     @FXML
     private Button btnBack;
-
+    
     @FXML
     private void handleRegisterBtn(ActionEvent event) {
         controller = new SceneNavigationController();
@@ -98,13 +103,16 @@ public class LoginRegisterViewController implements Initializable {
         } else if (passwordFeild.getText().length() < 8 || passwordFeild.getText().length() > 16) {
             errorAlert("Please Enter Valid Password");
         } else {
+           login("Menna@menna.com" , "123456789");
+//login(emailField.getText(), passwordFeild.getText());
             controller = new SceneNavigationController();
             try {
                 controller.switchToOnlineMainScene(event);
             } catch (IOException ex) {
                 Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+          }
+        
     }
 
     public void errorAlert(String message) {
@@ -121,6 +129,17 @@ public class LoginRegisterViewController implements Initializable {
         return matcher.matches();
     }
 
+    public void login(String email, String password) {
+        try {
+            
+            ConenctionHelper.connectToServer();
+            Player obj = new Player(email, password);
+            (ConenctionHelper.getObjectOutputStream()).writeObject(obj);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginRegisterViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

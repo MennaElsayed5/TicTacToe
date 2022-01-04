@@ -6,6 +6,7 @@
 package controller;
 
 import controller.CustomItems.CustomItemAvailableListViewController;
+import helper.ConenctionHelper;
 import java.awt.Desktop.Action;
 import java.io.IOException;
 import java.net.URL;
@@ -39,7 +40,6 @@ public class OnlineMainSceneController implements Initializable{
     int i=0;
     ArrayList<FXMLLoader> availablePlayers,playersInGame;
     CustomItemAvailableListViewController item;
-   
     public void showAvailablePlayer()
     { 
         ObservableList observableList = FXCollections.observableArrayList();
@@ -77,6 +77,18 @@ public class OnlineMainSceneController implements Initializable{
             Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    @FXML
+    public void handelLogoutButton(ActionEvent event){
+    controller = new SceneNavigationController();
+        try {
+            ConenctionHelper.disconnectToServer();
+            controller.switchToOnlineScene(event);
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+   // public void getPlayRequest (){    }
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {

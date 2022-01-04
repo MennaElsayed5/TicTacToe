@@ -8,7 +8,10 @@ package helper;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 
 /**
@@ -20,12 +23,14 @@ public class ConenctionHelper {
     private static Socket socket = null;
     private static ObjectOutputStream objOutputStream;
     private static ObjectInputStream objInputStream;
+  //  private static PrintStream ps;
     private static final String MY_IP = "10.178.241.76";
 
-    private static void connectToServer() {
+    public static void connectToServer() {
         if (socket == null) {
             try {
                 socket = new Socket(MY_IP, 5005);
+            //     ps = new PrintStream(socket.getOutputStream());
                 objOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 objInputStream = new ObjectInputStream(socket.getInputStream());
             } catch (IOException ex) {
@@ -36,19 +41,29 @@ public class ConenctionHelper {
 
     }
 
-    private static boolean isConnected() {
+    public static void disconnectToServer() {
+        try {
+            objOutputStream.close();
+            objInputStream.close();
+            socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ConenctionHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static boolean isConnected() {
         return socket.isConnected();
     }
 
-    private static ObjectInputStream getObjectInputStream() {
+    public static ObjectInputStream getObjectInputStream() {
         return objInputStream;
     }
 
-    private static ObjectOutputStream getObjectOutputStream() {
+    public static ObjectOutputStream getObjectOutputStream() {
         return objOutputStream;
     }
 
-    private static void showErrorDialog(String msg) {
+    public static void showErrorDialog(String msg) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Test Connection");
         alert.setHeaderText(null);

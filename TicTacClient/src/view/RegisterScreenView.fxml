@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,8 +15,8 @@
 <GridPane alignment="CENTER" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="800.0" styleClass="bodybg" stylesheets="@../assets/background.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterScreenController">
    <columnConstraints>
       <ColumnConstraints />
-      <ColumnConstraints maxWidth="14.0" minWidth="0.0" prefWidth="14.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="464.0" minWidth="10.0" prefWidth="162.0" />
+      <ColumnConstraints maxWidth="49.0" minWidth="0.0" prefWidth="29.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="464.0" minWidth="10.0" prefWidth="147.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="517.0" minWidth="10.0" prefWidth="474.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="464.0" minWidth="10.0" prefWidth="150.0" />
    </columnConstraints>
@@ -89,28 +90,6 @@
             <Insets right="10.0" />
          </GridPane.margin>
       </TextField>
-      <TextField fx:id="passwordTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="375.0" promptText="Your Password" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
-         <font>
-            <Font name="Comic Sans MS" size="14.0" />
-         </font>
-         <padding>
-            <Insets left="10.0" right="10.0" />
-         </padding>
-         <GridPane.margin>
-            <Insets right="10.0" />
-         </GridPane.margin>
-      </TextField>
-      <TextField fx:id="confirmTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="375.0" promptText="Confirm password" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER">
-         <font>
-            <Font name="Comic Sans MS" size="14.0" />
-         </font>
-         <padding>
-            <Insets left="10.0" right="10.0" />
-         </padding>
-         <GridPane.margin>
-            <Insets right="10.0" />
-         </GridPane.margin>
-      </TextField>
       <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="38.0" prefWidth="464.0" text="Hello in Tic Tac Toe Game" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="1">
          <font>
             <Font name="Forte" size="36.0" />
@@ -146,15 +125,37 @@
             <Image url="@../../../../../TicTacToe/TicTacClient/src/assets/password.png" />
          </image>
       </ImageView>
-      <Button fx:id="bactBtn" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonBackPressed" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #3e79d5;" GridPane.columnIndex="2">
+      <Button fx:id="bactBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="17.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonBackPressed" prefHeight="52.0" prefWidth="97.0" style="-fx-background-color: #3e79d5;" GridPane.columnIndex="2">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </Button>
-      <ImageView fitHeight="30.0" fitWidth="50.0" nodeOrientation="INHERIT" pickOnBounds="true" GridPane.columnIndex="2">
+      <ImageView fitHeight="40.0" fitWidth="42.0" nodeOrientation="INHERIT" pickOnBounds="true" GridPane.columnIndex="2">
          <image>
-            <Image url="@../assets/icons8-left-2-50.png" />
+            <Image url="@../assets/backImage.png" />
          </image>
       </ImageView>
+      <PasswordField fx:id="passwordTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="375.0" promptText="your password" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
+         <font>
+            <Font name="Comic Sans MS" size="14.0" />
+         </font>
+         <GridPane.margin>
+            <Insets right="10.0" />
+         </GridPane.margin>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </PasswordField>
+      <PasswordField fx:id="confirmTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="375.0" promptText="con.password" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER">
+         <font>
+            <Font name="Comic Sans MS" size="14.0" />
+         </font>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+         <GridPane.margin>
+            <Insets right="10.0" />
+         </GridPane.margin>
+      </PasswordField>
    </children>
 </GridPane>
