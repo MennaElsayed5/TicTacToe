@@ -6,7 +6,9 @@
 package controller;
 
 import helper.ConnectionHelper;
+import java.io.EOFException;
 import java.io.IOException;
+import java.net.SocketException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -67,31 +69,33 @@ public class RegisterScreenController implements Initializable {
             if (!flagName) {
                 errorAlert("Please Enter Valid Name");
                 userNameTextField.clear();
-            } else {
-                userNameTextField.setText("");
-            }
-            if (!flagEmail) {
+            } 
+            else if (!flagEmail) {
                 errorAlert("Please Enter Valid Email");
                 EmailTextField.clear();
-            } else {
-                EmailTextField.setText("");
-            }
-            if (!flagPassword) {
+            } 
+            else if (!flagPassword) {
                 errorAlert("Invalid password");
                 passwordTextField.clear();
-            } else {
-                passwordTextField.setText("");
-            }
+            } 
         }
 
     }
 
-    public void register(String name, String email, String password) {
+ public void register(String name, String email, String password) {
         try {
             ConnectionHelper.connectToServer();
             Player obj = new Player(name, email, password);
             (ConnectionHelper.getObjectOutputStream()).writeObject(obj);
+            Player respons = (Player) ConnectionHelper.getObjectInputStream().readObject();
+        } catch (SocketException ex) {
+            ConnectionHelper.disconnectFromServer();
+
+        } catch (EOFException ex) {
+            ConnectionHelper.disconnectFromServer();
         } catch (IOException ex) {
+            Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

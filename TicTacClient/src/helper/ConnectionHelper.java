@@ -52,15 +52,13 @@ public class ConnectionHelper {
     
     }
 
-    public static void connectToServer() {
+    public static void connectToServer()throws IOException {
         if (socket == null) {
-            try {
-                socket = new Socket(MY_IP, 5005);
+            
+                socket = new Socket(MY_IP, 3333);
                 objOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 objInputStream = new ObjectInputStream(socket.getInputStream());
-            } catch (IOException ex) {
-                showErrorDialog("Cannot connect to the server!\nPlease check your connection.");
-            }
+            
         }
 
     }

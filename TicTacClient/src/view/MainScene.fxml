@@ -24,7 +24,7 @@
       <RowConstraints minHeight="10.0" prefHeight="0.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button fx:id="playerVsAiBtn" ellipsisString="" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#handleVsAiBtn" prefHeight="50.0" prefWidth="235.0" style="-fx-background-radius: 12 12 12 12; -fx-background-color: #f6c913;" textOverrun="CENTER_ELLIPSIS" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <Button fx:id="playerVsAiBtn" ellipsisString="" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#handleVsAiBtn" prefHeight="50.0" prefWidth="235.0" style="-fx-background-radius: 12 12 12 12; -fx-background-color: #fdc810;" textOverrun="CENTER_ELLIPSIS" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <padding>
             <Insets bottom="5.0" left="40.0" right="40.0" top="5.0" />
          </padding>
@@ -36,7 +36,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="playerVsPlayerBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleVsPlayerBtn" prefHeight="50.0" prefWidth="235.0" style="-fx-background-color: #f6c913; -fx-background-radius: 12 12 12 12;" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+      <Button fx:id="playerVsPlayerBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleVsPlayerBtn" prefHeight="50.0" prefWidth="235.0" style="-fx-background-color: #fdc810; -fx-background-radius: 12 12 12 12;" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
          <padding>
             <Insets bottom="5.0" left="40.0" right="40.0" top="5.0" />
          </padding>
@@ -48,7 +48,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="PlayervsOnline" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleVsPlayerOnlineBtn" prefHeight="50.0" prefWidth="235.0" style="-fx-background-color: #f6c913; -fx-background-radius: 12 12 12 12;" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+      <Button fx:id="PlayervsOnline" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleVsPlayerOnlineBtn" prefHeight="50.0" prefWidth="235.0" style="-fx-background-color: #fdc810; -fx-background-radius: 12 12 12 12;" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
          <padding>
             <Insets bottom="5.0" left="40.0" right="40.0" top="5.0" />
          </padding>
@@ -60,7 +60,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="aboutBtn" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="50.0" prefWidth="235.0" style="-fx-background-color: #f6c913; -fx-background-radius: 12 12 12 12;" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+      <Button fx:id="aboutBtn" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="50.0" prefWidth="235.0" style="-fx-background-color: #fdc810; -fx-background-radius: 12 12 12 12;" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
          <padding>
             <Insets bottom="5.0" left="40.0" right="40.0" top="5.0" />
          </padding>
@@ -71,7 +71,7 @@
                </image></ImageView>
          </graphic>
       </Button>
-      <Button fx:id="exitBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="50.0" prefWidth="235.0" style="-fx-background-color: #f6c913; -fx-background-radius: 12 12 12 12;" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+      <Button fx:id="exitBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="50.0" prefWidth="235.0" style="-fx-background-color: #fdc810; -fx-background-radius: 12 12 12 12;" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
          <padding>
             <Insets bottom="5.0" left="40.0" right="40.0" top="5.0" />
          </padding>

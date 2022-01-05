@@ -1,6 +1,6 @@
 package controller;
 
-import com.sun.media.jfxmedia.locator.ConnectionHolder;
+
 import helper.ConnectionHelper;
 import java.io.IOException;
 import java.net.URL;
@@ -29,7 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import sun.audio.AudioPlayer;
+
 
 /**
  *
@@ -114,35 +114,45 @@ public class MainSceneController implements Initializable {
 
     @FXML
     private void handleVsPlayerOnlineBtn(ActionEvent event) {
-        
-        
-        String ip = "";
-        boolean ex_flag = true;
-        try {
-            TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Dialog");
-            dialog.setContentText("Please Enter The Server IP Address : ");
-            Optional<String> result = dialog.showAndWait();
-            if (result.isPresent()) {
-                //TODO connect to server
+              String ip = "";
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Dialog");
+        dialog.setContentText("Please Enter The Server IP Address : ");
+        Optional<String> result = dialog.showAndWait();
+    
+     //boolean flag =  ConnectionHelper.isConnected();
+         boolean ex_flag = true;
+         try{
+        if (isIPVaild(result.get()) == true) {
+            try {
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            ConnectionHelper.connectToServer();
+//                                  //show.setConnected(ConnectionHelper.isConnected());
+//
+//                        } catch (IOException ex) {
+//                            Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                    }
+//                }).start();
+               ConnectionHelper.connectToServer();
+            
+                controller = new SceneNavigationController();
+                controller.switchToOnlineScene(event);
+            } catch (IOException ex) {
+              ConnectionHelper.showErrorDialog("Server Not Connection");
+                System.out.println("not connect");
             }
-            ip = result.get();
-            if (isIPVaild(ip) == true) {
-                try {
-                    //TODO check for server connection 
-                    controller = new SceneNavigationController();
-                    controller.switchToOnlineScene(event);
-                } catch (IOException ex) {
-                    Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error Dialog");
-                alert.setContentText("Wrong IP Try Again");
-                alert.showAndWait();
-            }
-        } catch (NoSuchElementException e) {
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error Dialog");
+            alert.setContentText("Wrong IP Try Again");
+            alert.showAndWait();
+        }
+         }catch (NoSuchElementException e) {
             try {
                 ex_flag = false;
                 controller = new SceneNavigationController();
@@ -151,6 +161,8 @@ public class MainSceneController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (Exception ex) {
+            Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
