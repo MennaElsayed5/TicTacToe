@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,20 +20,26 @@ public class SceneNavigationController {
     private Scene scene;
     private Parent root;
 
-    public void switchToPlayerVsPlayerScene(ActionEvent event) throws IOException {
-        switchToScene(event, "/view/PlayerVsPlayerView.fxml");
+   
+     public void switchToPlayerVsPlayerScene(Stage stage) throws IOException {
+         Parent r=FXMLLoader.load(getClass().getResource("/view/PlayerVsPlayerView.fxml"));
+        switchToScene(stage,r);
     }
 
-    public void switchToPlayerVsAIScene(ActionEvent event) throws IOException {
-        switchToScene(event, "/view/PlayerVsAIView.fxml");
+     public void switchToPlayerVsAIScene(Stage stage) throws IOException {
+         Parent r=FXMLLoader.load(getClass().getResource("/view/PlayerVsAIView.fxml"));
+        switchToScene(stage,r);
     }
+    
 
-    public void switchToMainScene(ActionEvent event) throws IOException {
-        switchToScene(event, "/view/MainScene.fxml");
+    public void switchToMainScene(Stage stage) throws IOException {
+        Parent parent=FXMLLoader.load(getClass().getResource( "/view/MainScene.fxml"));
+        switchToScene(stage,parent);
     }
-
-    public void switchToOnlineMainScene(ActionEvent event) throws IOException {
-        switchToScene(event, "/view/OnlineMainView.fxml");
+    
+    public void switchToOnlineMainScene(Stage stage) throws IOException {
+        Parent r=FXMLLoader.load(getClass().getResource("/view/OnlineMainView.fxml"));
+        switchToScene(stage,r);
     }
 
     public void switchToOnlineScene(ActionEvent event) throws IOException {
@@ -54,6 +62,12 @@ public class SceneNavigationController {
         root = FXMLLoader.load(getClass().getResource(path));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    private void switchToScene(Stage stage,Parent fXMLLoader)
+    {
+        scene = new Scene(fXMLLoader);
         stage.setScene(scene);
         stage.show();
     }

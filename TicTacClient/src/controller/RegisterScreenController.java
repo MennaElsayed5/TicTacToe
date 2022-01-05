@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.Player;
 
 /**
@@ -33,13 +34,15 @@ public class RegisterScreenController implements Initializable {
     private TextField EmailTextField;
     @FXML
     private PasswordField passwordTextField;
+    
+    SceneNavigationController controller;
 
     @FXML
-    private void buttonBackPressed(ActionEvent event) {
-        SceneNavigationController controller = new SceneNavigationController();
+    private void buttonBackPressed() {
+        Stage stage=(Stage)userNameTextField.getScene().getWindow();
         System.out.println("BackPressed");
         try {
-            controller.switchToMainScene(event);
+            controller.switchToMainScene(stage);
         } catch (IOException ex) {
             Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -54,9 +57,9 @@ public class RegisterScreenController implements Initializable {
 
         if (flagName && flagEmail && flagPassword) {
           //  register("menna", "menna@gmail.com", "11111111");
-            SceneNavigationController controller = new SceneNavigationController();
             try {
-                controller.switchToOnlineMainScene(event);
+                Stage stage=(Stage)userNameTextField.getScene().getWindow();
+                controller.switchToOnlineMainScene(stage);
             } catch (IOException ex) {
                 Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -136,6 +139,6 @@ public class RegisterScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        controller = new SceneNavigationController();
     }
 }

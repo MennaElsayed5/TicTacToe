@@ -21,7 +21,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 
 
 /**
@@ -38,6 +44,8 @@ public class OnlineMainSceneController implements Initializable {
     
     @FXML
     ListView recordedGamesListView;
+    
+    String requestPlayerName;
 
     SceneNavigationController controller;
     FXMLLoader fxmlLoader;
@@ -69,11 +77,7 @@ public class OnlineMainSceneController implements Initializable {
         String[] gameFiles = recordedGames.list();
         return gameFiles;
     }
-
  
-
-
-    
     public void showAvailablePlayer()
     { 
         try {
@@ -108,13 +112,9 @@ public class OnlineMainSceneController implements Initializable {
     }
 
      @FXML
-    private void buttonBackPressed(ActionEvent event) {
-        
-        try {
-            controller.switchToMainScene(event);
-        } catch (IOException ex) {
-            Logger.getLogger(PlayerVsPlayerController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+    private void btnLogOutPressed() {
+        Stage s=(Stage)playersInGameList.getScene().getWindow();
+        ConnectionHelper.logOut(s);
     }
 
     
@@ -129,6 +129,58 @@ public class OnlineMainSceneController implements Initializable {
         }
     }
     
+    public void startListen()
+    {
+    Thread th=new Thread()
+    {
+    @Override
+    public void run(){
+        
+        while(requestPlayerName==null)
+        {
+         requestPlayerName=ConnectionHelper.returnRequestPlayerName();
+         if(requestPlayerName!=null)
+             askPlayWithYou(requestPlayerName);
+        }
+        
+    }
+    };
+       if(ConnectionHelper.isConnected())
+           th.start();
+    }
+     public void askPlayWithYou(String s) {
+         
+        ButtonType Yes = new ButtonType("Agree");
+        ButtonType No = new ButtonType("DisCoard", ButtonBar.ButtonData.CANCEL_CLOSE);
+        Alert a = new Alert(Alert.AlertType.NONE);
+        a.setTitle("Requst Game");
+        a.getDialogPane().getButtonTypes().addAll(Yes, No);
+        a.setHeaderText(s+" want to play with you");
+        a.showAndWait();
+        if(a.getResult() == Yes) {
+              
+              ConnectionHelper.replayForRequest(true);
+              switchToOnlineGame();
+              //return true;
+        } else {
+            //return false;
+            ConnectionHelper.replayForRequest(false);
+        }
+    }
+     
+     public void switchToOnlineGame()
+     {
+        try {
+            Parent root=FXMLLoader.load(getClass().getResource("/view/PlayerVsPlayerView.fxml"));
+            Stage stag=(Stage)playersInGameList.getScene().getWindow();
+            Scene scene=new Scene(root);
+            stag.setScene(scene);
+            stag.show();
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

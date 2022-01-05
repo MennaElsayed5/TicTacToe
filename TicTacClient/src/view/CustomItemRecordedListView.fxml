@@ -3,8 +3,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" fx:id="itemListAnchorPane" maxHeight="50.0" maxWidth="443.0" minHeight="34.0" minWidth="190.0" onMouseClicked="#showRecordedGames" prefHeight="34.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomItems.CustomItemRecordedGameController">
+<AnchorPane id="AnchorPane" fx:id="itemListAnchorPane" maxHeight="50.0" maxWidth="443.0" minHeight="34.0" minWidth="190.0" onMouseClicked="#showRecordedGames" prefHeight="34.0" prefWidth="443.0" style="-fx-background-color: #7EC8E3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomItems.CustomItemRecordedGameController">
    <children>
-      <TextField fx:id="itemListTextField" editable="false" layoutY="5.0" onMouseClicked="#showRecordedGames" opacity="0.59" prefHeight="25.0" prefWidth="443.0" />
+      <TextField fx:id="itemListTextField" editable="false" layoutY="5.0" onMouseClicked="#showRecordedGames" opacity="0.59" prefHeight="25.0" prefWidth="443.0" style="-fx-background-color: #7EC8E3;" />
    </children>
 </AnchorPane>

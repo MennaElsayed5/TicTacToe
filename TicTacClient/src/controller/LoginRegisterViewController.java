@@ -30,6 +30,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import model.Player;
 
 /**
@@ -45,8 +46,7 @@ public class LoginRegisterViewController implements Initializable {
     @FXML
     private Button btnRegister;
 
-    @FXML
-    private Button btnBack;
+   
     
     @FXML
     private void handleRegisterBtn(ActionEvent event) {
@@ -59,11 +59,10 @@ public class LoginRegisterViewController implements Initializable {
     }
 
     @FXML
-    private void buttonBackPressed(ActionEvent event) {
-        controller = new SceneNavigationController();
-
+    private void buttonBackPressed() {
+       Stage stage=(Stage)btnLogin.getScene().getWindow();
         try {
-            controller.switchToMainScene(event);
+            controller.switchToMainScene(stage);
         } catch (IOException ex) {
             Logger.getLogger(PlayerVsAIViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -107,7 +106,8 @@ public class LoginRegisterViewController implements Initializable {
 //login(emailField.getText(), passwordFeild.getText());
             controller = new SceneNavigationController();
             try {
-                controller.switchToOnlineMainScene(event);
+                 Stage stage=(Stage)btnLogin.getScene().getWindow();
+                controller.switchToOnlineMainScene(stage);
             } catch (IOException ex) {
                 Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -142,6 +142,6 @@ public class LoginRegisterViewController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+     controller=new SceneNavigationController();
     }
 }

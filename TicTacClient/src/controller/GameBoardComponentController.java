@@ -100,10 +100,13 @@ public class GameBoardComponentController implements Initializable {
 
     @FXML
     ImageView imgViewPlayer2;
+    
+    SceneNavigationController controller;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Image image;
+         controller= new SceneNavigationController();
         try {
             initPrefPlayer();
 
@@ -126,14 +129,14 @@ public class GameBoardComponentController implements Initializable {
     }
 
     @FXML
-    private void buttonBackPressed(ActionEvent event) {
-        SceneNavigationController controller = new SceneNavigationController();
+    private void buttonBackPressed() {
+        Stage stage=(Stage)btn00.getScene().getWindow();
 
         try {
             pref.clear();
             playerOneName = "";
             playerTwoName = "";
-            controller.switchToMainScene(event);
+            controller.switchToMainScene(stage);
         } catch (IOException ex) {
             Logger.getLogger(PlayerVsPlayerController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (BackingStoreException ex) {

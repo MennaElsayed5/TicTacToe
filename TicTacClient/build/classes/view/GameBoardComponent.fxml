@@ -132,11 +132,6 @@
             <Font name="Forte" size="28.0" />
          </font>
       </Label>
-      <Button fx:id="buttonExit" layoutX="18.0" layoutY="21.0" mnemonicParsing="false" onAction="#buttonBackPressed" prefHeight="49.0" prefWidth="102.0" style="-fx-background-color: #3e79d5;">
-         <font>
-            <Font name="Arial Rounded MT Bold" size="25.0" />
-         </font>
-      </Button>
       <ImageView fx:id="imgViewPlayer2" fitHeight="75.0" fitWidth="145.0" layoutX="507.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/pc1.png" />
@@ -147,7 +142,7 @@
             <Image url="@../assets/playerVsPc.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="29.0" layoutY="26.0" pickOnBounds="true">
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="29.0" layoutY="26.0" onMouseClicked="#buttonBackPressed" pickOnBounds="true">
          <image>
             <Image url="@../assets/backImage.png" />
          </image>

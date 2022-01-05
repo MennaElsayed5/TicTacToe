@@ -111,8 +111,7 @@
             <Image url="@../assets/password.png" />
          </image>
       </ImageView>
-      <Button fx:id="bactBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="17.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonBackPressed" prefHeight="52.0" prefWidth="97.0" style="-fx-background-color: #3e79d5;" GridPane.columnIndex="2" />
-      <ImageView fitHeight="40.0" fitWidth="42.0" nodeOrientation="INHERIT" pickOnBounds="true" scaleZ="-1.0" GridPane.columnIndex="2" GridPane.valignment="CENTER">
+      <ImageView fitHeight="40.0" fitWidth="42.0" nodeOrientation="INHERIT" onMouseClicked="#buttonBackPressed" pickOnBounds="true" scaleZ="-1.0" GridPane.columnIndex="2" GridPane.valignment="CENTER">
          <image>
             <Image url="@../assets/backImage.png" />
          </image>

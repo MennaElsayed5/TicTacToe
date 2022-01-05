@@ -20,6 +20,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -28,21 +29,24 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import sun.audio.AudioPlayer;
 
 /**
  *
  * @author Eslam Esmael
  */
 public class MainSceneController implements Initializable {
+    @FXML
+    private Button playerVsAiBtn;
 
     SceneNavigationController controller;
     static String fname;
 
     @FXML
     private void handleVsAiBtn(ActionEvent event) {
-        controller = new SceneNavigationController();
+        Stage stage=(Stage)playerVsAiBtn.getScene().getWindow();
         try {
-            controller.switchToPlayerVsAIScene(event);
+            controller.switchToPlayerVsAIScene(stage);
         } catch (IOException ex) {
             Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -100,7 +104,8 @@ public class MainSceneController implements Initializable {
         } else {
             try {
                 controller = new SceneNavigationController();
-                controller.switchToMainScene(event);
+                Stage stage=(Stage)playerVsAiBtn.getScene().getWindow();
+                controller.switchToMainScene(stage);
             } catch (IOException ex) {
                 Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -141,7 +146,8 @@ public class MainSceneController implements Initializable {
             try {
                 ex_flag = false;
                 controller = new SceneNavigationController();
-                controller.switchToMainScene(event);
+                 Stage stage=(Stage)playerVsAiBtn.getScene().getWindow();
+                controller.switchToMainScene(stage);
             } catch (IOException ex) {
                 Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -152,7 +158,7 @@ public class MainSceneController implements Initializable {
     @FXML
     private void handleExitButton(ActionEvent event) {
         Platform.exit();
-        ConnectionHelper.disconnectFromServer();
+       // ConnectionHelper.disconnectFromServer();
     }
 
     public boolean isIPVaild(String Ip) {
