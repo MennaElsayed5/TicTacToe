@@ -1,6 +1,5 @@
 package controller;
 
-
 import helper.ConnectionHelper;
 import java.io.IOException;
 import java.net.URL;
@@ -28,8 +27,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 
 /**
  *
@@ -44,7 +43,7 @@ public class MainSceneController implements Initializable {
 
     @FXML
     private void handleVsAiBtn(ActionEvent event) {
-        Stage stage=(Stage)playerVsAiBtn.getScene().getWindow();
+        Stage stage = (Stage) playerVsAiBtn.getScene().getWindow();
         try {
             controller.switchToPlayerVsAIScene(stage);
         } catch (IOException ex) {
@@ -104,7 +103,7 @@ public class MainSceneController implements Initializable {
         } else {
             try {
                 controller = new SceneNavigationController();
-                Stage stage=(Stage)playerVsAiBtn.getScene().getWindow();
+                Stage stage = (Stage) playerVsAiBtn.getScene().getWindow();
                 controller.switchToMainScene(stage);
             } catch (IOException ex) {
                 Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
@@ -114,49 +113,36 @@ public class MainSceneController implements Initializable {
 
     @FXML
     private void handleVsPlayerOnlineBtn(ActionEvent event) {
-              String ip = "";
+        String ip = "";
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Dialog");
         dialog.setContentText("Please Enter The Server IP Address : ");
         Optional<String> result = dialog.showAndWait();
-    
-     //boolean flag =  ConnectionHelper.isConnected();
-         boolean ex_flag = true;
-         try{
-        if (isIPVaild(result.get()) == true) {
-            try {
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        try {
-//                            ConnectionHelper.connectToServer();
-//                                  //show.setConnected(ConnectionHelper.isConnected());
-//
-//                        } catch (IOException ex) {
-//                            Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-//                    }
-//                }).start();
-               ConnectionHelper.connectToServer();
-            
-                controller = new SceneNavigationController();
-                controller.switchToOnlineScene(event);
-            } catch (IOException ex) {
-              ConnectionHelper.showErrorDialog("Server Not Connection");
-                System.out.println("not connect");
+
+        boolean ex_flag = true;
+        try {
+            if (isIPVaild(result.get()) == true) {
+                try {
+                    ConnectionHelper.connectToServer();
+
+                    controller = new SceneNavigationController();
+                    controller.switchToOnlineScene(event);
+                } catch (IOException ex) {
+                    ConnectionHelper.showErrorDialog("Server Not Connection");
+                    System.out.println("not connect");
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error Dialog");
+                alert.setContentText("Wrong IP Try Again");
+                alert.showAndWait();
             }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error Dialog");
-            alert.setContentText("Wrong IP Try Again");
-            alert.showAndWait();
-        }
-         }catch (NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             try {
                 ex_flag = false;
                 controller = new SceneNavigationController();
-                 Stage stage=(Stage)playerVsAiBtn.getScene().getWindow();
+                Stage stage = (Stage) playerVsAiBtn.getScene().getWindow();
                 controller.switchToMainScene(stage);
             } catch (IOException ex) {
                 Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
@@ -166,28 +152,24 @@ public class MainSceneController implements Initializable {
         }
 
     }
-    
+
     @FXML
     private void handleExitButton(ActionEvent event) {
         Platform.exit();
-       // ConnectionHelper.disconnectFromServer();
+        // ConnectionHelper.disconnectFromServer();
     }
 
     public boolean isIPVaild(String Ip) {
         if (Ip == null) {
             return false;
         }
-        String ip = "^"
-                + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|[1-9])\\."
-                + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
-                + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
-                + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)$";
+        String ip = "\\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\.|$)){4}\\b";
         Pattern pattern = Pattern.compile(ip);
         Matcher matcher = pattern.matcher(Ip);
         return matcher.matches();
     }
 
-    @Override
+      @Override
     public void initialize(URL url, ResourceBundle rb) {
         controller = new SceneNavigationController();
     }
