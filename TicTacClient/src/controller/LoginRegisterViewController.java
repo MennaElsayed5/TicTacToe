@@ -6,10 +6,9 @@
 package controller;
 
 import helper.ConnectionHelper;
-import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
+import java.net.SocketException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -17,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,7 +28,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Player;
@@ -44,10 +46,14 @@ public class LoginRegisterViewController implements Initializable {
     private Button btnLogin;
 
     @FXML
+    private AnchorPane anchorPane;
+
+    @FXML
+    private ProgressIndicator progress;
+
+    @FXML
     private Button btnRegister;
 
-   
-    
     @FXML
     private void handleRegisterBtn(ActionEvent event) {
         controller = new SceneNavigationController();
@@ -60,7 +66,7 @@ public class LoginRegisterViewController implements Initializable {
 
     @FXML
     private void buttonBackPressed() {
-       Stage stage=(Stage)btnLogin.getScene().getWindow();
+        Stage stage = (Stage) btnLogin.getScene().getWindow();
         try {
             controller.switchToMainScene(stage);
         } catch (IOException ex) {
@@ -102,17 +108,19 @@ public class LoginRegisterViewController implements Initializable {
         } else if (passwordFeild.getText().length() < 8 || passwordFeild.getText().length() > 16) {
             errorAlert("Please Enter Valid Password");
         } else {
-           login("Menna@menna.com" , "123456789");
-//login(emailField.getText(), passwordFeild.getText());
-            controller = new SceneNavigationController();
-            try {
-                 Stage stage=(Stage)btnLogin.getScene().getWindow();
-                controller.switchToOnlineMainScene(stage);
-            } catch (IOException ex) {
-                Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-          }
-        
+            blockUi();
+            Thread th = new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    //login(emailField.getText(), passwordFeild.getText());
+                    login("Menna@menna.com", "123456789");
+
+                }
+            });
+            th.start();
+        }
+
     }
 
     public void errorAlert(String message) {
@@ -131,17 +139,47 @@ public class LoginRegisterViewController implements Initializable {
 
     public void login(String email, String password) {
         try {
-            
             ConnectionHelper.connectToServer();
             Player obj = new Player(email, password);
             (ConnectionHelper.getObjectOutputStream()).writeObject(obj);
+            ConnectionHelper.getObjectInputStream().readObject();
+            Stage stage = (Stage) btnLogin.getScene().getWindow();
+            controller.switchToOnlineMainScene(stage);
+        } catch (SocketException ex) {
+            ConnectionHelper.disconnectFromServer();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (EOFException ex) {
+            ConnectionHelper.disconnectFromServer();
         } catch (IOException ex) {
-            Logger.getLogger(LoginRegisterViewController.class.getName()).log(Level.SEVERE, null, ex);
+            unblockUi();
         }
-
     }
+
+    public void blockUi() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                anchorPane.setDisable(true);
+                progress.setStyle(" -fx-progress-color: black");
+                progress.setVisible(true);
+            }
+        });
+    }
+
+    public void unblockUi() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                anchorPane.setDisable(false);
+                progress.setVisible(false);
+                ConnectionHelper.showErrorDialog("incorrect email or password");
+            }
+        });
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-     controller=new SceneNavigationController();
+        controller = new SceneNavigationController();
     }
 }

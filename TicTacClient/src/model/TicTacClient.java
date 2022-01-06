@@ -17,7 +17,7 @@ public class TicTacClient extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 // Todo uncomment the splash        
-// new SplashScreenController().display();
+ new SplashScreenController().display();
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainScene.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);

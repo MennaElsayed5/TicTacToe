@@ -24,10 +24,11 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -35,11 +36,26 @@ import javafx.stage.Stage;
  * @author Eslam Esmael
  */
 public class MainSceneController implements Initializable {
-    @FXML
-    private Button playerVsAiBtn;
 
     SceneNavigationController controller;
+
+    @FXML
+    private Button playerVsAiBtn;
     static String fname;
+    @FXML
+    private GridPane gridPane;
+    @FXML
+    private Button playerVsPlayerBtn;
+    @FXML
+    private Button PlayervsOnline;
+    @FXML
+    private Button aboutBtn;
+    @FXML
+    private Button exitBtn;
+    @FXML
+    private AnchorPane anchorPane;
+    @FXML
+    private ProgressIndicator progress;
 
     @FXML
     private void handleVsAiBtn(ActionEvent event) {
@@ -118,19 +134,28 @@ public class MainSceneController implements Initializable {
         dialog.setTitle("Dialog");
         dialog.setContentText("Please Enter The Server IP Address : ");
         Optional<String> result = dialog.showAndWait();
-
         boolean ex_flag = true;
         try {
             if (isIPVaild(result.get()) == true) {
-                try {
-                    ConnectionHelper.connectToServer();
+                blockUi();
+                Thread th = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
 
-                    controller = new SceneNavigationController();
-                    controller.switchToOnlineScene(event);
-                } catch (IOException ex) {
-                    ConnectionHelper.showErrorDialog("Server Not Connection");
-                    System.out.println("not connect");
-                }
+                        try {
+                            ConnectionHelper.connectToServer();
+                            controller = new SceneNavigationController();
+                            controller.switchToOnlineScene(event);
+                        } catch (IOException ex) {
+                            unblockUi();
+
+                        }
+                    }
+                });
+                th.start();
+                controller = new SceneNavigationController();
+                controller.switchToOnlineScene(event);
+
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -169,7 +194,34 @@ public class MainSceneController implements Initializable {
         return matcher.matches();
     }
 
-      @Override
+    public void blockUi() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                anchorPane.setDisable(true);
+                progress.setStyle(" -fx-progress-color: black");
+                progress.setVisible(true);
+            }
+
+        });
+
+    }
+
+    public void unblockUi() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                anchorPane.setDisable(false);
+                progress.setVisible(false);
+                ConnectionHelper.showErrorDialog("Server Not Connection");
+
+            }
+
+        });
+
+    }
+
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
         controller = new SceneNavigationController();
     }

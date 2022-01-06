@@ -52,18 +52,18 @@ public class SplashScreenController extends Thread{
     {   
         start();
          Image i;
-                 i = new Image(getClass().getResourceAsStream("/assets/splashImg.png"));
+                 i = new Image(getClass().getResourceAsStream("/assets/splash.png"));
              //stage.initModality(Modality.APPLICATION_MODAL);
              //remove exit and maximize and minimize
              stage.initStyle(StageStyle.UNDECORATED);
              stage.setMinWidth(500);
              stage.setMinHeight(500);
-             stage.setMaxWidth(500);
-             stage.setMaxHeight(500);
+             stage.setMaxWidth(800);
+             stage.setMaxHeight(432);
              
              
-             iv.setFitWidth(500);
-             iv.setFitHeight(500);
+             iv.setFitWidth(800);
+             iv.setFitHeight(432);
              iv.setImage(i);
              
              box.getChildren().add(iv);

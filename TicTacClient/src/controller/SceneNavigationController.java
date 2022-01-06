@@ -1,8 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -44,6 +42,10 @@ public class SceneNavigationController {
 
     public void switchToOnlineScene(ActionEvent event) throws IOException {
         switchToScene(event, "/view/LoginRegisterView.fxml");
+    }
+    public void switchToOnlineScene(Stage stage) throws IOException {
+        Parent root=FXMLLoader.load(getClass().getResource("/view/LoginRegisterView.fxml"));
+        switchToScene(stage, root);
     }
 
     public void switchToLoginScene(ActionEvent event) throws IOException {

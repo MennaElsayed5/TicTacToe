@@ -15,12 +15,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Player;
 
@@ -36,9 +39,12 @@ public class RegisterScreenController implements Initializable {
     private TextField EmailTextField;
     @FXML
     private PasswordField passwordTextField;
+    @FXML
+    private AnchorPane anchorPane;
+    @FXML
+  private ProgressIndicator progress;
     
     SceneNavigationController controller;
-
     @FXML
     private void buttonBackPressed() {
         Stage stage=(Stage)userNameTextField.getScene().getWindow();
@@ -56,16 +62,22 @@ public class RegisterScreenController implements Initializable {
         boolean flagName = isValidUsername(userNameTextField.getText());
         boolean flagEmail = isValidEmail(EmailTextField.getText());
         boolean flagPassword = isaValidPassword(passwordTextField.getText());
-
         if (flagName && flagEmail && flagPassword) {
-          //  register("menna", "menna@gmail.com", "11111111");
-            try {
-                Stage stage=(Stage)userNameTextField.getScene().getWindow();
-                controller.switchToOnlineMainScene(stage);
-            } catch (IOException ex) {
-                Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
+            
+             blockUi();
+            Thread th = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    //login(emailField.getText(), passwordFeild.getText());
+                    register("menna", "menna@gmail.com", "11111111");
+                    
+                }
+            });
+            th.start();
+         
+
+        }
+        else {
             if (!flagName) {
                 errorAlert("Please Enter Valid Name");
                 userNameTextField.clear();
@@ -88,17 +100,48 @@ public class RegisterScreenController implements Initializable {
             Player obj = new Player(name, email, password);
             (ConnectionHelper.getObjectOutputStream()).writeObject(obj);
             Player respons = (Player) ConnectionHelper.getObjectInputStream().readObject();
-        } catch (SocketException ex) {
+              Stage stage=(Stage)userNameTextField.getScene().getWindow();
+                controller.switchToOnlineMainScene(stage);
+        } 
+        catch (SocketException ex) {
             ConnectionHelper.disconnectFromServer();
-
-        } catch (EOFException ex) {
-            ConnectionHelper.disconnectFromServer();
-        } catch (IOException ex) {
-            Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        catch (EOFException ex) {
+            ConnectionHelper.disconnectFromServer();
+        } catch (IOException ex) {
+           unblockUi();
+        }
     }
+ 
+   public void blockUi() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                anchorPane.setDisable(true);
+                progress.setStyle(" -fx-progress-color: black");
+                progress.setVisible(true);
+            }
+
+        });
+
+    }
+
+    public void unblockUi() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                anchorPane.setDisable(false);
+                progress.setVisible(false);
+                 ConnectionHelper.showErrorDialog("incorrect email or password");
+
+            }
+
+        });
+
+    }
+
 
     public boolean isValidUsername(String name) {
         String regex = "^[A-Za-z]\\w{2,29}$";
