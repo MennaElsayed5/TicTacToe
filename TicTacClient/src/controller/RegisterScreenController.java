@@ -26,12 +26,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Player;
+import model.PlayerOnline;
+import model.RegisterModel;
 
 /**
  *
  * @author menna
  */
 public class RegisterScreenController implements Initializable {
+
+    Thread listener;
 
     @FXML
     private TextField userNameTextField;
@@ -42,80 +46,49 @@ public class RegisterScreenController implements Initializable {
     @FXML
     private AnchorPane anchorPane;
     @FXML
-  private ProgressIndicator progress;
-    
+    private ProgressIndicator progress;
+
     SceneNavigationController controller;
+
     @FXML
     private void buttonBackPressed() {
-        Stage stage=(Stage)userNameTextField.getScene().getWindow();
+        Stage stage = (Stage) userNameTextField.getScene().getWindow();
         System.out.println("BackPressed");
         try {
             controller.switchToMainScene(stage);
         } catch (IOException ex) {
             Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @FXML
     private void btnRegisterToMainOnline(ActionEvent event) {
-        boolean flagName = isValidUsername(userNameTextField.getText());
-        boolean flagEmail = isValidEmail(EmailTextField.getText());
-        boolean flagPassword = isaValidPassword(passwordTextField.getText());
-        if (flagName && flagEmail && flagPassword) {
-            
-             blockUi();
-            Thread th = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    //login(emailField.getText(), passwordFeild.getText());
-                    register("menna", "menna@gmail.com", "11111111");
-                    
+
+        if (isValidUsername(userNameTextField.getText())) {
+            if (isValidEmail(EmailTextField.getText())) {
+                if (isaValidPassword(passwordTextField.getText())) {
+                    try {
+                        ConnectionHelper.getObjectOutputStream().writeObject(new RegisterModel(userNameTextField.getText(), EmailTextField.getText(), passwordTextField.getText()));
+                        ConnectionHelper.getObjectOutputStream().flush();
+                        if (!listener.isAlive()) {
+                            listener.start();
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    errorAlert("invalid password");
                 }
-            });
-            th.start();
-         
-
-        }
-        else {
-            if (!flagName) {
-                errorAlert("Please Enter Valid Name");
-                userNameTextField.clear();
-            } 
-            else if (!flagEmail) {
-                errorAlert("Please Enter Valid Email");
-                EmailTextField.clear();
-            } 
-            else if (!flagPassword) {
-                errorAlert("Invalid password");
-                passwordTextField.clear();
-            } 
+            } else {
+                errorAlert("Invalid email");
+            }
+        } else {
+            errorAlert("Invalid UserName");
         }
 
     }
 
- public void register(String name, String email, String password) {
-        try {
-            ConnectionHelper.connectToServer();
-            Player obj = new Player(name, email, password);
-            (ConnectionHelper.getObjectOutputStream()).writeObject(obj);
-            Player respons = (Player) ConnectionHelper.getObjectInputStream().readObject();
-              Stage stage=(Stage)userNameTextField.getScene().getWindow();
-                controller.switchToOnlineMainScene(stage);
-        } 
-        catch (SocketException ex) {
-            ConnectionHelper.disconnectFromServer();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (EOFException ex) {
-            ConnectionHelper.disconnectFromServer();
-        } catch (IOException ex) {
-           unblockUi();
-        }
-    }
- 
-   public void blockUi() {
+    public void blockUi() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -134,14 +107,10 @@ public class RegisterScreenController implements Initializable {
             public void run() {
                 anchorPane.setDisable(false);
                 progress.setVisible(false);
-                 ConnectionHelper.showErrorDialog("incorrect email or password");
-
             }
-
         });
 
     }
-
 
     public boolean isValidUsername(String name) {
         String regex = "^[A-Za-z]\\w{2,29}$";
@@ -177,15 +146,53 @@ public class RegisterScreenController implements Initializable {
     }
 
     public void errorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Error Dialog");
-        alert.setContentText(message);
-        alert.showAndWait();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error Dialog");
+                alert.setContentText(message);
+                alert.showAndWait();
+            }
+        });
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         controller = new SceneNavigationController();
+        listener = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Object object = ConnectionHelper.getObjectInputStream().readObject();
+                        if (object != null) {
+                            //return from server
+
+                            if (object instanceof String) {
+                                String result = (String) object;
+                                if (result.equals("PlayerRegistered")) {
+                                    Stage stage = (Stage) EmailTextField.getScene().getWindow();
+                                    controller.switchToOnlineMainScene(stage);
+                                } else if (result.equals("ServerError")) {
+                                    errorAlert("Can't insert player to db may be already registered ");
+                                }
+                            }
+                        }
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        listener.stop();
+                    } catch (ClassNotFoundException ex) {
+                        ex.printStackTrace();
+                        listener.stop();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        listener.stop();
+                    }
+                }
+            }
+        });
+
     }
 }

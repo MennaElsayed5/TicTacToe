@@ -4,6 +4,7 @@ import helper.ConnectionHelper;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.Socket;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.NoSuchElementException;
@@ -102,11 +103,8 @@ public class MainSceneController implements Initializable {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PlayerVsPlayerView.fxml"));
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     Scene scene = new Scene(loader.load());
-
-                    //((PlayerVsPlayerController) loader.getController()).setNames(text1.getText(), text2.getText());
                     stage.setScene(scene);
                     stage.show();
-
                 } catch (IOException ex) {
                     Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -143,24 +141,30 @@ public class MainSceneController implements Initializable {
                 Thread th = new Thread(new Runnable() {
                     @Override
                     public void run() {
-
-                        try {
-                            ConnectionHelper.connectToServer();
-                            controller = new SceneNavigationController();
-                            controller.switchToOnlineScene(event);
-                        } catch (IOException ex) {
-                            unblockUi();
-
+                        Socket socket = ConnectionHelper.getInstanceOf(result.get());
+                        if (socket != null && socket.isConnected()) {
+                            try {
+                                controller = new SceneNavigationController();
+                                controller.switchToLoginRegisterScene(event);
+                            } catch (IOException ex) {
+                                Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
+
                     }
                 });
                 th.start();
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error Dialog");
-                alert.setContentText("Wrong IP Try Again");
-                alert.showAndWait();
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText("Error Dialog");
+                        alert.setContentText("Wrong IP Try Again");
+                        alert.showAndWait();
+                    }
+                });
             }
         } catch (NoSuchElementException e) {
             try {
@@ -180,10 +184,11 @@ public class MainSceneController implements Initializable {
     @FXML
     private void handleExitButton(ActionEvent event) {
         Platform.exit();
-        // ConnectionHelper.disconnectFromServer();
+        ConnectionHelper.disconnectFromServer();
     }
+
     @FXML
-    private void handelAboutButton (ActionEvent event){
+    private void handelAboutButton(ActionEvent event) {
         try {
             Desktop.getDesktop().browse(new URL("https://github.com/EslamEsmael/TicTacToe").toURI());
         } catch (MalformedURLException ex) {
@@ -193,7 +198,7 @@ public class MainSceneController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+
     }
 
     public boolean isIPVaild(String Ip) {
@@ -214,20 +219,16 @@ public class MainSceneController implements Initializable {
                 progress.setStyle(" -fx-progress-color: black");
                 progress.setVisible(true);
             }
-
         });
-
     }
+
     public void unblockUi() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 anchorPane.setDisable(false);
                 progress.setVisible(false);
-                ConnectionHelper.showErrorDialog("Server Not Connection");
-
             }
-
         });
 
     }

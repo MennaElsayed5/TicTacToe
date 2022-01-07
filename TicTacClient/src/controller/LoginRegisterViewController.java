@@ -5,9 +5,11 @@
  */
 package controller;
 
+import com.sun.javafx.scene.SceneHelper;
 import helper.ConnectionHelper;
 import java.io.EOFException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.SocketException;
 import java.net.URL;
 import java.util.Optional;
@@ -34,12 +36,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Player;
+import model.PlayerOnline;
 
 /**
  *
  * @author menna
  */
 public class LoginRegisterViewController implements Initializable {
+
+    Thread listener;
 
     SceneNavigationController controller;
     @FXML
@@ -75,17 +80,18 @@ public class LoginRegisterViewController implements Initializable {
     }
 
     @FXML
-    private void buttonloginPressed(ActionEvent event) {
+    private void buttonloginPressed(ActionEvent event) throws IOException {
         System.out.println("Login pressed ");
         String email = "";
         String password = "";
-        boolean flag = true;
+
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Login");
         Label emailLabel = new Label("Email : " + email);
         Label passwordLabel = new Label("Password: " + password);
         TextField emailField = new TextField();
         PasswordField passwordFeild = new PasswordField();
+
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -95,34 +101,33 @@ public class LoginRegisterViewController implements Initializable {
         grid.add(passwordLabel, 1, 2);
         grid.add(passwordFeild, 2, 2);
         dialog.getDialogPane().setContent(grid);
+
         ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
+
         dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+
         Optional<String> result = dialog.showAndWait();
+
+        //checking result
         if (result.isPresent()) {
-        if (emailField.getText().isEmpty()) {
-            errorAlert("Please Enter Your Email");
-        } else if (passwordFeild.getText().isEmpty()) {
-            errorAlert("Please Enter Your Password");
-        } else if (checkEmailvalidity(passwordFeild.getText())) {
-            errorAlert("Please Enter Valid Email");
-        } else if (passwordFeild.getText().length() < 8 || passwordFeild.getText().length() > 16) {
-            errorAlert("Please Enter Valid Password");
-        } else {
-            blockUi();
-            Thread th = new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-                    //login(emailField.getText(), passwordFeild.getText());
-                    login("Menna@menna.com", "123456789");
-
+            if (emailField.getText().isEmpty()) {
+                errorAlert("Please Enter Your Email");
+            } else if (passwordFeild.getText().isEmpty()) {
+                errorAlert("Please Enter Your Password");
+            } else if (checkEmailvalidity(passwordFeild.getText())) {
+                errorAlert("Please Enter Valid Email");
+            } else if (passwordFeild.getText().length() < 8 || passwordFeild.getText().length() > 16) {
+                errorAlert("Please Enter Valid Password");
+            } else {
+                //blockUi();
+                ConnectionHelper.getObjectOutputStream().writeObject(new PlayerOnline(emailField.getText(), passwordFeild.getText()));
+                ConnectionHelper.getObjectOutputStream().flush();
+                if (!listener.isAlive()) {
+                    listener.start();
                 }
-            });
-            th.start();
-        }
-        }
-        else{
-      controller=new SceneNavigationController();
+            }
+        } else {
+            controller = new SceneNavigationController();
             try {
                 controller.switchToLoginScene(event);
             } catch (IOException ex) {
@@ -132,36 +137,22 @@ public class LoginRegisterViewController implements Initializable {
     }
 
     public void errorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Error Dialog");
-        alert.setContentText(message);
-        alert.showAndWait();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error Dialog");
+                alert.setContentText(message);
+                alert.showAndWait();
+            }
+        });
     }
 
     public boolean checkEmailvalidity(String email) {
         Pattern pattern = Pattern.compile("^[\\w_\\.+]*\\@([\\w]+\\.)+[\\w]+[\\w]$");
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
-    }
-
-    public void login(String email, String password) {
-        try {
-            ConnectionHelper.connectToServer();
-            Player obj = new Player(email, password);
-            (ConnectionHelper.getObjectOutputStream()).writeObject(obj);
-            ConnectionHelper.getObjectInputStream().readObject();
-            Stage stage = (Stage) btnLogin.getScene().getWindow();
-            controller.switchToOnlineMainScene(stage);
-        } catch (SocketException ex) {
-            ConnectionHelper.disconnectFromServer();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(RegisterScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (EOFException ex) {
-            ConnectionHelper.disconnectFromServer();
-        } catch (IOException ex) {
-            unblockUi();
-        }
     }
 
     public void blockUi() {
@@ -181,7 +172,6 @@ public class LoginRegisterViewController implements Initializable {
             public void run() {
                 anchorPane.setDisable(false);
                 progress.setVisible(false);
-                ConnectionHelper.showErrorDialog("incorrect email or password");
             }
         });
     }
@@ -189,5 +179,36 @@ public class LoginRegisterViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         controller = new SceneNavigationController();
+        listener = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Object object = ConnectionHelper.getObjectInputStream().readObject();
+                        if (object != null) {
+                            if (object instanceof String) {
+                                String loginResultString = (String) object;
+                                if (loginResultString.equals("notFound")) {
+                                    errorAlert("Wrong email or password");
+                                }
+                            } else if (object instanceof Player) {
+                                Player player = (Player) object;
+                                Stage stage = (Stage) btnLogin.getScene().getWindow();
+                                controller.switchToOnlineMainScene(stage);
+                            }
+                        }
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        listener.stop();
+                    } catch (ClassNotFoundException ex) {
+                        ex.printStackTrace();
+                        listener.stop();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        listener.stop();
+                    }
+                }
+            }
+        });
     }
 }

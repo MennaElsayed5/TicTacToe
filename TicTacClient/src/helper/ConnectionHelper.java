@@ -1,23 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package helper;
 
 import controller.SceneNavigationController;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-import model.Player;
 
 /**
  *
@@ -28,39 +23,29 @@ public class ConnectionHelper {
     public static Socket socket = null;
     private static ObjectOutputStream objOutputStream;
     private static ObjectInputStream objInputStream;
-    private static final String MY_IP = "10.178.241.76";
-    private static SceneNavigationController controller=new SceneNavigationController();
-    
-    public static String returnRequestPlayerName()
-    {
-        Player player;
-    if(isConnected()){
-       try {
-          player=(Player) objInputStream.readObject();
-          if(player!=null)
-          return player.getUsername();
-    } catch (IOException ex) {
-        Logger.getLogger(ConnectionHelper.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(ConnectionHelper.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    }
-        return null;
-    }
-    public static void replayForRequest(boolean replay)
-    {
-    
-    }
+    private static SceneNavigationController controller = new SceneNavigationController();
 
-    public static void connectToServer()throws IOException {
-        if (socket == null) {
-            
-                socket = new Socket(MY_IP, 3333);
+    private static final String SERVER_IP = "192.168.173.1";
+    private static final int PORT = 5006;
+
+    public static synchronized Socket getInstanceOf(String ip) {
+        if (socket == null || socket.isClosed()) {
+            try {
+                //TODO change static ip to real ip from the dialog
+                socket = new Socket(SERVER_IP, PORT);
                 objOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 objInputStream = new ObjectInputStream(socket.getInputStream());
-            
+            } catch (ConnectException ex) {
+                System.out.println("problem in server");
+            } catch (SocketException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
-
+        return socket;
     }
 
     public static void disconnectFromServer() {
@@ -70,7 +55,6 @@ public class ConnectionHelper {
         } catch (IOException ex) {
             Logger.getLogger(ConnectionHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
     public static boolean isConnected() {
@@ -92,8 +76,8 @@ public class ConnectionHelper {
         alert.setContentText(msg);
         alert.showAndWait();
     }
-    
-    public static void closeStreams(){
+
+    public static void closeStreams() {
         try {
             objOutputStream.close();
             objInputStream.close();
@@ -101,20 +85,16 @@ public class ConnectionHelper {
             Logger.getLogger(ConnectionHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public static void handleTheOtherPlayerDisconnation(Stage stage){
-        showErrorDialog("your conpatitor not found \nyou won");
+
+    public static void closeSocket() {
         try {
-           
-            controller.switchToOnlineMainScene(stage);
+            socket.close();
         } catch (IOException ex) {
             Logger.getLogger(ConnectionHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
     }
-    
-    public static void logOut(Stage stage){
+
+    public static void logOut(Stage stage) {
         ButtonType Yes = new ButtonType("yes");
         ButtonType No = new ButtonType("NO", ButtonBar.ButtonData.CANCEL_CLOSE);
         Alert a = new Alert(Alert.AlertType.NONE);
@@ -122,19 +102,20 @@ public class ConnectionHelper {
         a.getDialogPane().getButtonTypes().addAll(Yes, No);
         a.setHeaderText("LOGOUT");
         a.showAndWait();
-        if(stage==null)
-        System.out.println("stage null");
-        if(a.getResult() == Yes) {
-          //  disconnectFromServer();
+        if (stage == null) {
+            System.out.println("stage null");
+        }
+        if (a.getResult() == Yes) {
+            //  disconnectFromServer();
             try {
                 controller.switchToMainScene(stage);
             } catch (IOException ex) {
                 Logger.getLogger(ConnectionHelper.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    } 
-    
-    public static void handleServerDisconnation(Stage stage){
+    }
+
+    public static void handleServerDisconnation(Stage stage) {
         disconnectFromServer();
         showErrorDialog("Server not found");
         try {

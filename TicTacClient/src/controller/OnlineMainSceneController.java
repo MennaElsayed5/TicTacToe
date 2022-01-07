@@ -5,8 +5,6 @@
  */
 package controller;
 
-
-
 import controller.CustomItems.CustomItemRecordedGameController;
 import helper.ConnectionHelper;
 import java.io.File;
@@ -29,7 +27,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
-
 /**
  *
  * @author mina
@@ -41,35 +38,35 @@ public class OnlineMainSceneController implements Initializable {
 
     @FXML
     ListView playersInGameList;
-    
+
     @FXML
     ListView recordedGamesListView;
-    
+
     String requestPlayerName;
 
     SceneNavigationController controller;
     FXMLLoader fxmlLoader;
-    ObservableList observableAvailableList, observablePlayerInGameList,observableRecordeedList;
+    ObservableList observableAvailableList, observablePlayerInGameList, observableRecordeedList;
     private final String DIRNAME = "RecordedGames";
 
     public void showRecordedList() {
         String[] arr = getFiles();
-        System.out.println(observableRecordeedList.size()+"observable size"+arr.length);
-            for(int j=0;j<arr.length&&observableRecordeedList.size()<arr.length;j++){
-                    try {
-            fxmlLoader = new FXMLLoader(getClass().getResource("/view/CustomItemRecordedListView.fxml"));
-            observableRecordeedList.add(fxmlLoader.load());
-            ((CustomItemRecordedGameController) fxmlLoader.getController()).setInfo(arr[j]);
-            
-        } catch (IOException ex) {
-            Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        System.out.println(observableRecordeedList.size() + "observable size" + arr.length);
+        for (int j = 0; j < arr.length && observableRecordeedList.size() < arr.length; j++) {
+            try {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/view/CustomItemRecordedListView.fxml"));
+                observableRecordeedList.add(fxmlLoader.load());
+                ((CustomItemRecordedGameController) fxmlLoader.getController()).setInfo(arr[j]);
+
+            } catch (IOException ex) {
+                Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            recordedGamesListView.refresh();
+        }
+        recordedGamesListView.refresh();
     }
-    public void clearObservables()
-    {
-    observableRecordeedList.clear();
+
+    public void clearObservables() {
+        observableRecordeedList.clear();
     }
 
     public String[] getFiles() {
@@ -77,9 +74,8 @@ public class OnlineMainSceneController implements Initializable {
         String[] gameFiles = recordedGames.list();
         return gameFiles;
     }
- 
-    public void showAvailablePlayer()
-    { 
+
+    public void showAvailablePlayer() {
         try {
             fxmlLoader = new FXMLLoader(getClass().getResource("/view/CustomItemAvailableListView.fxml"));
             observableAvailableList.add(fxmlLoader.load());
@@ -111,76 +107,53 @@ public class OnlineMainSceneController implements Initializable {
         }
     }
 
-     @FXML
+    @FXML
     private void btnLogOutPressed() {
-        Stage s=(Stage)playersInGameList.getScene().getWindow();
+        Stage s = (Stage) playersInGameList.getScene().getWindow();
         ConnectionHelper.logOut(s);
     }
 
-    
     @FXML
-    public void handelLogoutButton(ActionEvent event){
-    controller = new SceneNavigationController();
+    public void handelLogoutButton(ActionEvent event) {
+        controller = new SceneNavigationController();
         try {
             ConnectionHelper.disconnectFromServer();
-            controller.switchToOnlineScene(event);
+            controller.switchToLoginScene(event);
         } catch (IOException ex) {
             Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void startListen()
-    {
-    Thread th=new Thread()
-    {
-    @Override
-    public void run(){
-        
-        while(requestPlayerName==null)
-        {
-         requestPlayerName=ConnectionHelper.returnRequestPlayerName();
-         if(requestPlayerName!=null)
-             askPlayWithYou(requestPlayerName);
-        }
-        
-    }
-    };
-       if(ConnectionHelper.isConnected())
-           th.start();
-    }
-     public void askPlayWithYou(String s) {
-         
-        ButtonType Yes = new ButtonType("Agree");
-        ButtonType No = new ButtonType("DisCoard", ButtonBar.ButtonData.CANCEL_CLOSE);
-        Alert a = new Alert(Alert.AlertType.NONE);
-        a.setTitle("Requst Game");
-        a.getDialogPane().getButtonTypes().addAll(Yes, No);
-        a.setHeaderText(s+" want to play with you");
-        a.showAndWait();
-        if(a.getResult() == Yes) {
-              
-              ConnectionHelper.replayForRequest(true);
-              switchToOnlineGame();
-              //return true;
-        } else {
-            //return false;
-            ConnectionHelper.replayForRequest(false);
+
+    public void startListen() {
+        Thread th = new Thread() {
+            @Override
+            public void run() {
+
+                while (requestPlayerName == null) {
+                    //requestPlayerName = ConnectionHelper.returnRequestPlayerName();
+                    if (requestPlayerName != null) {
+
+                    }
+                }
+
+            }
+        };
+        if (ConnectionHelper.isConnected()) {
+            th.start();
         }
     }
-     
-     public void switchToOnlineGame()
-     {
+
+    public void switchToOnlineGame() {
         try {
-            Parent root=FXMLLoader.load(getClass().getResource("/view/PlayerVsPlayerView.fxml"));
-            Stage stag=(Stage)playersInGameList.getScene().getWindow();
-            Scene scene=new Scene(root);
+            Parent root = FXMLLoader.load(getClass().getResource("/view/PlayerVsPlayerView.fxml"));
+            Stage stag = (Stage) playersInGameList.getScene().getWindow();
+            Scene scene = new Scene(root);
             stag.setScene(scene);
             stag.show();
         } catch (IOException ex) {
             Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
-     }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -189,7 +162,7 @@ public class OnlineMainSceneController implements Initializable {
         availablePlayersList.setItems(observableAvailableList);
         observablePlayerInGameList = FXCollections.observableArrayList();
         playersInGameList.setItems(observablePlayerInGameList);
-        observableRecordeedList=FXCollections.observableArrayList();
+        observableRecordeedList = FXCollections.observableArrayList();
         recordedGamesListView.setItems(observableRecordeedList);
 
     }
