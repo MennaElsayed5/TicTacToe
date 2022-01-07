@@ -26,7 +26,7 @@
             <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="playerVsAiBtn" ellipsisString="" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#handleVsAiBtn" prefHeight="50.0" prefWidth="235.0" style="-fx-background-radius: 12 12 12 12; -fx-background-color: #fdc810;" textOverrun="CENTER_ELLIPSIS" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <Button fx:id="playerVsAiBtn" ellipsisString="" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#handleVsAiBtn" prefHeight="50.0" prefWidth="235.0" style="-fx-background-radius: 12 12 12 12; -fx-background-color: #f6c913;" textOverrun="CENTER_ELLIPSIS" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <padding>
                   <Insets bottom="5.0" left="40.0" right="40.0" top="5.0" />
                </padding>
@@ -62,7 +62,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="aboutBtn" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="50.0" prefWidth="235.0" style="-fx-background-color: #fdc810; -fx-background-radius: 12 12 12 12;" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+            <Button fx:id="aboutBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handelAboutButton" prefHeight="50.0" prefWidth="235.0" style="-fx-background-color: #fdc810; -fx-background-radius: 12 12 12 12;" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                <padding>
                   <Insets bottom="5.0" left="40.0" right="40.0" top="5.0" />
                </padding>

@@ -98,7 +98,7 @@ public class LoginRegisterViewController implements Initializable {
         ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
         Optional<String> result = dialog.showAndWait();
-
+        if (result.isPresent()) {
         if (emailField.getText().isEmpty()) {
             errorAlert("Please Enter Your Email");
         } else if (passwordFeild.getText().isEmpty()) {
@@ -120,7 +120,15 @@ public class LoginRegisterViewController implements Initializable {
             });
             th.start();
         }
-
+        }
+        else{
+      controller=new SceneNavigationController();
+            try {
+                controller.switchToLoginScene(event);
+            } catch (IOException ex) {
+                Logger.getLogger(LoginRegisterViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public void errorAlert(String message) {

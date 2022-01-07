@@ -1,7 +1,10 @@
 package controller;
 
 import helper.ConnectionHelper;
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -23,6 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
@@ -90,9 +94,7 @@ public class MainSceneController implements Initializable {
         ButtonType buttonTypeOk = new ButtonType("Okay", ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
         Optional<String> result = dialog.showAndWait();
-
         if (result.isPresent()) {
-
             if (!text1.getText().isEmpty() && !text2.getText().isEmpty()) {
                 PlayerVsPlayerController.playerOneName = text1.getText();
                 PlayerVsPlayerController.playerTwoName = text2.getText();
@@ -153,9 +155,6 @@ public class MainSceneController implements Initializable {
                     }
                 });
                 th.start();
-                controller = new SceneNavigationController();
-                controller.switchToOnlineScene(event);
-
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -183,6 +182,19 @@ public class MainSceneController implements Initializable {
         Platform.exit();
         // ConnectionHelper.disconnectFromServer();
     }
+    @FXML
+    private void handelAboutButton (ActionEvent event){
+        try {
+            Desktop.getDesktop().browse(new URL("https://github.com/EslamEsmael/TicTacToe").toURI());
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
 
     public boolean isIPVaild(String Ip) {
         if (Ip == null) {
@@ -206,7 +218,6 @@ public class MainSceneController implements Initializable {
         });
 
     }
-
     public void unblockUi() {
         Platform.runLater(new Runnable() {
             @Override
