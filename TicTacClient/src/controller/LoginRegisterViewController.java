@@ -92,6 +92,9 @@ public class LoginRegisterViewController implements Initializable {
         TextField emailField = new TextField();
         PasswordField passwordFeild = new PasswordField();
 
+        emailField.setText("Test1@mail.com");
+        passwordFeild.setText("123456789");
+
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -129,6 +132,7 @@ public class LoginRegisterViewController implements Initializable {
         } else {
             controller = new SceneNavigationController();
             try {
+                listener.stop();
                 controller.switchToLoginScene(event);
             } catch (IOException ex) {
                 Logger.getLogger(LoginRegisterViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -196,6 +200,7 @@ public class LoginRegisterViewController implements Initializable {
                                 Stage stage = (Stage) btnLogin.getScene().getWindow();
                                 controller.switchToOnlineMainScene(stage);
                             }
+                            listener.stop();
                         }
                     } catch (IOException ex) {
                         ex.printStackTrace();

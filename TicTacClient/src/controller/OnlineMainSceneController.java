@@ -26,29 +26,32 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import model.AvaliableAndCurrentlyPlayingPlayersModel;
 
 /**
  *
  * @author mina
  */
 public class OnlineMainSceneController implements Initializable {
-
+    
+    Thread listener;
+    
     @FXML
     ListView availablePlayersList;
-
+    
     @FXML
     ListView playersInGameList;
-
+    
     @FXML
     ListView recordedGamesListView;
-
+    
     String requestPlayerName;
-
+    
     SceneNavigationController controller;
     FXMLLoader fxmlLoader;
     ObservableList observableAvailableList, observablePlayerInGameList, observableRecordeedList;
     private final String DIRNAME = "RecordedGames";
-
+    
     public void showRecordedList() {
         String[] arr = getFiles();
         System.out.println(observableRecordeedList.size() + "observable size" + arr.length);
@@ -57,36 +60,36 @@ public class OnlineMainSceneController implements Initializable {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/view/CustomItemRecordedListView.fxml"));
                 observableRecordeedList.add(fxmlLoader.load());
                 ((CustomItemRecordedGameController) fxmlLoader.getController()).setInfo(arr[j]);
-
+                
             } catch (IOException ex) {
                 Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         recordedGamesListView.refresh();
     }
-
+    
     public void clearObservables() {
         observableRecordeedList.clear();
     }
-
+    
     public String[] getFiles() {
         File recordedGames = new File(DIRNAME);
         String[] gameFiles = recordedGames.list();
         return gameFiles;
     }
-
+    
     public void showAvailablePlayer() {
         try {
             fxmlLoader = new FXMLLoader(getClass().getResource("/view/CustomItemAvailableListView.fxml"));
             observableAvailableList.add(fxmlLoader.load());
             availablePlayersList.refresh();
-
+            
         } catch (IOException ex) {
             Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
         showPlayersInGame();
     }
-
+    
     public void showPlayersInGame() {
         try {
             fxmlLoader = new FXMLLoader(getClass().getResource("/view/CustomItemPlayersInGameListView.fxml"));
@@ -96,7 +99,7 @@ public class OnlineMainSceneController implements Initializable {
             Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     @FXML
     public void handleRecordButton(ActionEvent event) {
         controller = new SceneNavigationController();
@@ -106,13 +109,13 @@ public class OnlineMainSceneController implements Initializable {
             Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     @FXML
     private void btnLogOutPressed() {
         Stage s = (Stage) playersInGameList.getScene().getWindow();
         ConnectionHelper.logOut(s);
     }
-
+    
     @FXML
     public void handelLogoutButton(ActionEvent event) {
         controller = new SceneNavigationController();
@@ -123,26 +126,26 @@ public class OnlineMainSceneController implements Initializable {
             Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public void startListen() {
         Thread th = new Thread() {
             @Override
             public void run() {
-
+                
                 while (requestPlayerName == null) {
                     //requestPlayerName = ConnectionHelper.returnRequestPlayerName();
                     if (requestPlayerName != null) {
-
+                        
                     }
                 }
-
+                
             }
         };
         if (ConnectionHelper.isConnected()) {
             th.start();
         }
     }
-
+    
     public void switchToOnlineGame() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/PlayerVsPlayerView.fxml"));
@@ -154,7 +157,7 @@ public class OnlineMainSceneController implements Initializable {
             Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         controller = new SceneNavigationController();
@@ -164,7 +167,42 @@ public class OnlineMainSceneController implements Initializable {
         playersInGameList.setItems(observablePlayerInGameList);
         observableRecordeedList = FXCollections.observableArrayList();
         recordedGamesListView.setItems(observableRecordeedList);
-
+        
+        try {
+            //ConnectionHelper.getObjectOutputStream().writeObject(ConnectionHelper.playerID);
+            ConnectionHelper.getObjectOutputStream().writeObject("GetPlayers");
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        listener = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Object object = ConnectionHelper.getObjectInputStream().readObject();
+                        if (object instanceof AvaliableAndCurrentlyPlayingPlayersModel) {
+                            AvaliableAndCurrentlyPlayingPlayersModel players = (AvaliableAndCurrentlyPlayingPlayersModel) object;
+                            observableAvailableList = FXCollections.observableList(players.getAvailablePlayers());
+                            observablePlayerInGameList = FXCollections.observableList(players.getPlayingPlayers());
+                            
+                            availablePlayersList.setItems(observableAvailableList);
+                            playersInGameList.setItems(observablePlayerInGameList);
+                            if (!listener.isAlive()) {
+                                listener.start();
+                            }
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+            }
+        });
+        listener.start();
+        
     }
-
+    
 }

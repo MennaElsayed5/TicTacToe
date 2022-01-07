@@ -33,13 +33,12 @@ public class Player implements Serializable {
         this.email = email;
         this.password = password;
     }
-    
-      public Player(String username, String email, String password) {
-        this.username=username;
+
+    public Player(String username, String email, String password) {
+        this.username = username;
         this.email = email;
         this.password = password;
     }
-    
 
     public void setId(int id) {
         this.id = id;
@@ -120,4 +119,14 @@ public class Player implements Serializable {
     public int getDraws() {
         return draws;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(username);
+        builder.append("\n");
+        builder.append("Email : " + email);
+        return builder.toString();
+    }
+
 }
