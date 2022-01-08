@@ -7,7 +7,7 @@ package model;
 public class GameSession {
 
     private int counter;
-    
+
     Player playerOne;
     Player playerTwo;
     PlayerMove[] playersMoves;
@@ -17,8 +17,8 @@ public class GameSession {
         playersMoves = new PlayerMove[9];
         counter = 0;
     }
-    
-    public void addMove(PlayerMove move){
+
+    public void addMove(PlayerMove move) {
         playersMoves[counter] = move;
         counter++;
     }
@@ -34,10 +34,5 @@ public class GameSession {
     public void setCounter(int counter) {
         this.counter = counter;
     }
-    
-    
-    
-    
-    
 
 }

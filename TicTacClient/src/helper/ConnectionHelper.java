@@ -30,7 +30,7 @@ public class ConnectionHelper {
     private static ObjectInputStream objInputStream;
     private static SceneNavigationController controller = new SceneNavigationController();
 
-    public static final String SERVER_IP = "192.168.173.1";
+    public static final String SERVER_IP = "10.178.241.76";
     private static final int PORT = 5006;
 
     public static synchronized Socket getInstanceOf(String ip) {
