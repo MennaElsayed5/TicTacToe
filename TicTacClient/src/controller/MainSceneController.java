@@ -144,6 +144,7 @@ public class MainSceneController implements Initializable {
                         Socket socket = ConnectionHelper.getInstanceOf(result.get());
                         if (socket != null && socket.isConnected()) {
                             try {
+                                ConnectionHelper.IP_FROM_CLIENT = result.get();
                                 controller = new SceneNavigationController();
                                 controller.switchToLoginRegisterScene(event);
                             } catch (IOException ex) {

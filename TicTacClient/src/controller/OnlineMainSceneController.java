@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,8 +26,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.AvaliableAndCurrentlyPlayingPlayersModel;
+import model.OnlineAndCurrentlyPlayingPlayersModel;
+import model.Player;
 
 /**
  *
@@ -35,6 +38,12 @@ import model.AvaliableAndCurrentlyPlayingPlayersModel;
 public class OnlineMainSceneController implements Initializable {
     
     Thread listener;
+    
+    @FXML
+    TextField playerNameTextField;
+    
+    @FXML
+    TextField playerScoreTextField;
     
     @FXML
     ListView availablePlayersList;
@@ -127,25 +136,6 @@ public class OnlineMainSceneController implements Initializable {
         }
     }
     
-    public void startListen() {
-        Thread th = new Thread() {
-            @Override
-            public void run() {
-                
-                while (requestPlayerName == null) {
-                    //requestPlayerName = ConnectionHelper.returnRequestPlayerName();
-                    if (requestPlayerName != null) {
-                        
-                    }
-                }
-                
-            }
-        };
-        if (ConnectionHelper.isConnected()) {
-            th.start();
-        }
-    }
-    
     public void switchToOnlineGame() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/PlayerVsPlayerView.fxml"));
@@ -156,6 +146,18 @@ public class OnlineMainSceneController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private void updateUI(Player player) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ConnectionHelper.player = player;
+                playerNameTextField.setText(player.getUsername());
+                player.setScore(player.getWins() * 3);
+                playerScoreTextField.setText(String.valueOf(player.getScore()));
+            }
+        });
     }
     
     @Override
@@ -169,7 +171,7 @@ public class OnlineMainSceneController implements Initializable {
         recordedGamesListView.setItems(observableRecordeedList);
         
         try {
-            //ConnectionHelper.getObjectOutputStream().writeObject(ConnectionHelper.playerID);
+            ConnectionHelper.getObjectOutputStream().writeObject(ConnectionHelper.userId);
             ConnectionHelper.getObjectOutputStream().writeObject("GetPlayers");
         } catch (IOException ex) {
             Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
@@ -180,29 +182,35 @@ public class OnlineMainSceneController implements Initializable {
             public void run() {
                 while (true) {
                     try {
+                        ConnectionHelper.getInstanceOf(ConnectionHelper.SERVER_IP);
                         Object object = ConnectionHelper.getObjectInputStream().readObject();
-                        if (object instanceof AvaliableAndCurrentlyPlayingPlayersModel) {
-                            AvaliableAndCurrentlyPlayingPlayersModel players = (AvaliableAndCurrentlyPlayingPlayersModel) object;
+                        if (object instanceof OnlineAndCurrentlyPlayingPlayersModel) {
+                            OnlineAndCurrentlyPlayingPlayersModel players = (OnlineAndCurrentlyPlayingPlayersModel) object;
                             observableAvailableList = FXCollections.observableList(players.getAvailablePlayers());
                             observablePlayerInGameList = FXCollections.observableList(players.getPlayingPlayers());
                             
                             availablePlayersList.setItems(observableAvailableList);
                             playersInGameList.setItems(observablePlayerInGameList);
+                            
                             if (!listener.isAlive()) {
                                 listener.start();
                             }
+                        } else if (object instanceof Player) {
+                            Player player = (Player) object;
+                            updateUI(player);
                         }
                     } catch (IOException ex) {
                         Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                        listener.stop();
                     } catch (ClassNotFoundException ex) {
                         Logger.getLogger(OnlineMainSceneController.class.getName()).log(Level.SEVERE, null, ex);
+                        listener.stop();
                     }
                 }
                 
             }
         });
         listener.start();
-        
     }
     
 }

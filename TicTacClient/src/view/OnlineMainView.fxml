@@ -46,12 +46,12 @@
             </Tab>
         </tabs>
       </TabPane>
-      <TextField disable="true" layoutX="191.0" layoutY="22.0" prefHeight="29.0" prefWidth="153.0" text="mina">
+      <TextField fx:id="playerNameTextField" disable="true" layoutX="191.0" layoutY="22.0" prefHeight="29.0" prefWidth="153.0" text="mina">
          <font>
             <Font size="13.0" />
          </font>
       </TextField>
-      <TextField disable="true" layoutX="410.0" layoutY="21.0" prefHeight="29.0" prefWidth="59.0" text="200">
+      <TextField fx:id="playerScoreTextField" disable="true" layoutX="410.0" layoutY="21.0" prefHeight="29.0" prefWidth="59.0" text="200">
          <font>
             <Font size="13.0" />
          </font>

@@ -27,6 +27,8 @@ public class Player implements Serializable {
         this.wins = wins;
         this.loses = loses;
         this.draws = draws;
+        this.score = wins * 3;
+
     }
 
     public Player(String email, String password) {

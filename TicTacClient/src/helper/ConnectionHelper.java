@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import model.Player;
 
 /**
  *
@@ -20,12 +21,16 @@ import javafx.stage.Stage;
  */
 public class ConnectionHelper {
 
+    public static int userId;
+    public static Player player;
+    public static String IP_FROM_CLIENT;
+
     public static Socket socket = null;
     private static ObjectOutputStream objOutputStream;
     private static ObjectInputStream objInputStream;
     private static SceneNavigationController controller = new SceneNavigationController();
 
-    private static final String SERVER_IP = "192.168.173.1";
+    public static final String SERVER_IP = "192.168.173.1";
     private static final int PORT = 5006;
 
     public static synchronized Socket getInstanceOf(String ip) {
@@ -52,6 +57,9 @@ public class ConnectionHelper {
         closeStreams();
         try {
             socket.close();
+            socket = null;
+            objInputStream = null;
+            objInputStream = null;
         } catch (IOException ex) {
             Logger.getLogger(ConnectionHelper.class.getName()).log(Level.SEVERE, null, ex);
         }

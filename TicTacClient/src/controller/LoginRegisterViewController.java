@@ -188,6 +188,11 @@ public class LoginRegisterViewController implements Initializable {
             public void run() {
                 while (true) {
                     try {
+                        //Todo uncomment next line 
+                        //ConnectionHelper.getInstanceOf(ConnectionHelper.IP_FROM_CLIENT);
+                        
+                        //TODO comment next line 
+                        ConnectionHelper.getInstanceOf(ConnectionHelper.SERVER_IP);
                         Object object = ConnectionHelper.getObjectInputStream().readObject();
                         if (object != null) {
                             if (object instanceof String) {

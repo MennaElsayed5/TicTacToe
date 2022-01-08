@@ -12,19 +12,19 @@ import java.util.ArrayList;
  *
  * @author Eslam Esmael
  */
-public class AvaliableAndCurrentlyPlayingPlayersModel implements Serializable {
+public class OnlineAndCurrentlyPlayingPlayersModel implements Serializable {
 
     private static final long serialVersionUID = 6529685098667757700L;
 
-    private ArrayList<Player> availablePlayers;
+    private ArrayList<Player> onlinePlayers;
     private ArrayList<Player> playingPlayers;
 
     public ArrayList<Player> getAvailablePlayers() {
-        return availablePlayers;
+        return onlinePlayers;
     }
 
     public void setAvailablePlayers(ArrayList<Player> availablePlayers) {
-        this.availablePlayers = availablePlayers;
+        this.onlinePlayers = availablePlayers;
     }
 
     public ArrayList<Player> getPlayingPlayers() {
